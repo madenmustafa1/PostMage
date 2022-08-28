@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-import '../util/app_util.dart';
+import '/util/app_util.dart';
 
 class CalcSizedBox extends StatelessWidget {
   final int calc;

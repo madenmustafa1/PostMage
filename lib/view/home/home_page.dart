@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import '/util/router.dart';
+import '/widgets/appbar_border_radius.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '/view/home/home_page_list.dart';
@@ -23,27 +25,22 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorUtil.GREY_PLATINUM,
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, CRouter.ADD_POST);
+        },
+        backgroundColor: ColorUtil.MAIN_COLOR,
+      ),
       appBar: AppBar(
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 15, top: 3),
-          child: IconButton(
-            color: Colors.black,
-            icon: const Icon(Icons.drag_indicator_outlined),
-            tooltip: constants.homePageTitle,
-            onPressed: () {
-              // handle the press
-            },
-          ),
-        ),
+        //leading: Container(),
         title: SimpleText(
           text: constants.homePageTitle,
           optionalTextSize: 25,
         ),
         backgroundColor: ColorUtil.GREY_PLATINUM,
         shadowColor: null,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(25.0),
-        ),
+        shape: AppbarWidgetUtil.appbarBorderRadius(),
       ),
       body: SingleChildScrollView(
         physics: const ClampingScrollPhysics(),
@@ -53,7 +50,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CalcSizedBox(calc: 14),
+              const CalcSizedBox(calc: 20),
               HomePageUserTitle(),
               const CalcSizedBox(calc: 15),
               //E.T.

@@ -46,6 +46,20 @@ class Constants {
   String TR_TUTORIAL_BOTTOM_INFO = "Yeni nesil alışveriş";
   String TUTORIAL_BG_IMAGE_URL = "assets/img/login_photo3.png";
 
+  //Add Post
+  String addPostAppTitle = "Fotoğraf ekle";
+  String TR_MAKE_COMMENT = "Açıklama yap";
+  String TR_SHARED_SUCCESSFULLY = "Post paylaşıldı";
+
+  //GENERAL
+  //TR
+  String TR_SAVE = "Kaydet";
+  String TR_OK = "Tamam";
+  String TR_CANCEL = "İptal";
+  String TR_CLOSE = "Kapat";
+  String TR_CONTINUE = "Devam et";
+  String TR_GENERAL_ERROR = "Hata oluştu";
+
   //#####################################################################
   //ERROR MESSAGES
   String errorMailMessage = "E-posta boş bırakılamaz.";
@@ -64,6 +78,5 @@ class Constants {
   String secondText = "2";
   String thirdText = "3";
   String firstText = "1";
-
   String pastOrder = "Geçmiş paylaşımlarım";
 }

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'color_extension.dart';
 
 class ColorUtil {
-  static Color MAIN_COLOR = HexColor.fromHex('#1440cb'); // Name: ??
+  static Color MAIN_COLOR = HexColor.fromHex('#0467B3'); // Name: ??
   static Color MAIN_COLOR_50 = HexColor.fromHex('#1440cb'); // Name: ??
 
   static Color BACKGROUND_COLOR =

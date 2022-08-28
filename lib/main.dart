@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mdntls/util/router.dart';
-import 'package:mdntls/view/onboarding/onboarding_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/util/router.dart';
+import '/view/onboarding/onboarding_screen.dart';
 import '/util/responsive_constants.dart';
 import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
@@ -17,7 +18,7 @@ void main() {
         statusBarBrightness: Brightness.light),
   );
 
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

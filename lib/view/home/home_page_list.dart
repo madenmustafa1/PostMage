@@ -15,7 +15,7 @@ class HomePageList extends StatelessWidget {
     return _horizontalListView(context);
   }
 
-  Constants constants = getIt<Constants>();
+  final Constants constants = getIt<Constants>();
 
   Widget _horizontalListView(BuildContext context) {
     return Column(

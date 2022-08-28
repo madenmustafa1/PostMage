@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
+import '../view/add_post/add_post_page.dart';
 import '/view/tutorial/tutorial_page.dart';
 import '/view/login/sign_in_page.dart';
 import '/view/home/home_page.dart';
@@ -38,14 +39,13 @@ class CRouter {
           builder: (_) => TutorialPage(),
           settings: settings,
         );
-      /*
+
       case '/add_post':
         return CupertinoPageRoute(
-          builder: (_) => AddPostPage(),
+          builder: (_) => const AddPostPage(),
           settings: settings,
           fullscreenDialog: true,
         );
-        */
     }
     return null;
   }

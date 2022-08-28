@@ -9,8 +9,6 @@ import '/util/constants.dart';
 class LoginViewModel {
   Constants constants = getIt<Constants>();
 
-  //LoginRepository loginRepository = LoginRepository();
-
   Future<LoginControlModel> signIn(String email, String password) async {
     String errorDesc = "";
     try {
