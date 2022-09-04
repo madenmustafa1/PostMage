@@ -1,13 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import '/view/home/home_widgets/main_list.dart';
 import '/util/router.dart';
 import '/widgets/appbar_border_radius.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import '/view/home/home_page_list.dart';
-import '/view/home/home_page_user_title.dart';
-import '/widgets/text_and_button/simple_button.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '/widgets/calc_sized_box.dart';
@@ -37,8 +35,10 @@ class HomePage extends StatelessWidget {
         title: SimpleText(
           text: constants.homePageTitle,
           optionalTextSize: 25,
+          textColor: ColorUtil.WHITE,
         ),
-        backgroundColor: ColorUtil.GREY_PLATINUM,
+
+        backgroundColor: ColorUtil.MAIN_COLOR,
         shadowColor: null,
         shape: AppbarWidgetUtil.appbarBorderRadius(),
       ),
@@ -50,62 +50,8 @@ class HomePage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CalcSizedBox(calc: 20),
-              HomePageUserTitle(),
-              const CalcSizedBox(calc: 15),
-              //E.T.
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Stack(
-                    children: [
-                      SimpleButton(
-                          customWidgetAligmentLeft: true,
-                          buttonText: constants.firstText,
-                          customRadiusLeft: true,
-                          onPressed: () {}),
-                    ],
-                  ),
-                ],
-              ),
-              const CalcSizedBox(calc: 60),
-              //Ü
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Stack(
-                    children: [
-                      SimpleButton(
-                          customWidgetAligmentLeft: true,
-                          buttonText: constants.secondText,
-                          customRadiusLeft: true,
-                          onPressed: () {}),
-                    ],
-                  ),
-                ],
-              ),
-              const CalcSizedBox(calc: 60),
-              //C.T.
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Stack(
-                    children: [
-                      SimpleButton(
-                        customWidgetAligmentLeft: true,
-                        buttonText: constants.thirdText,
-                        customRadiusLeft: true,
-                        onPressed: () => showModal(context),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-
-              const CalcSizedBox(calc: 20),
-              //ListView
-              HomePageList()
+              const CalcSizedBox(calc: 65),
+              MainList(),
             ],
           ),
         ),
@@ -146,4 +92,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-// ListView(

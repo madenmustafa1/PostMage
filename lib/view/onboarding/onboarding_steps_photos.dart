@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import '/util/styles.dart';
 
 class OnboardingStepPhotos extends StatelessWidget {
-  const OnboardingStepPhotos(
-      {Key? key,
-      required this.titleText,
-      required this.contentText,
-      required this.imagePath})
-      : super(key: key);
+  const OnboardingStepPhotos({
+    Key? key,
+    required this.titleText,
+    required this.contentText,
+    required this.imagePath,
+  }) : super(key: key);
   final String titleText;
   final String contentText;
   final String imagePath;

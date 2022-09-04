@@ -7,8 +7,8 @@ import '/util/app_util.dart';
 
 import '/widgets/text_and_button/simple_text.dart';
 
-class HomePageList extends StatelessWidget {
-  HomePageList({Key? key}) : super(key: key);
+class HomePagePastOrderList extends StatelessWidget {
+  HomePagePastOrderList({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../home/home_widgets/home_page_past_order_list.dart';
 import '/widgets/show_toast.dart';
 import '/view/add_post/ap_widgets/add_post_image.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
@@ -65,7 +66,10 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
                 onPressed: () {
                   saveButton();
                 },
-              )
+              ),
+              const CalcSizedBox(calc: 20),
+              //ListView
+              HomePagePastOrderList()
             ],
           ),
         ),

@@ -7,14 +7,14 @@ import '/util/color_util.dart';
 import '/widgets/box_decoration.dart';
 
 class AddPostImage extends StatelessWidget {
-  AddPostImage({
+  const AddPostImage({
     Key? key,
     required this.selectedImageBytes,
     required this.callback,
   }) : super(key: key);
 
-  VoidCallback callback;
-  Uint8List? selectedImageBytes;
+  final VoidCallback callback;
+  final Uint8List? selectedImageBytes;
 
   @override
   Widget build(BuildContext context) {

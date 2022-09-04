@@ -10,6 +10,14 @@ class LoginViewModel {
   Constants constants = getIt<Constants>();
 
   Future<LoginControlModel> signIn(String email, String password) async {
+    UserModel userModel =
+        UserModel(mail: "testmail@gmail.com", userUUID: "userUUID");
+    return LoginControlModel(
+      message: constants.loginSuccessMessage,
+      isSucces: true,
+      userModel: userModel,
+    );
+
     String errorDesc = "";
     try {
       if (email.trim().isEmpty) {
