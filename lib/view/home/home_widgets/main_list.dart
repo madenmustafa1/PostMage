@@ -98,7 +98,7 @@ class MainList extends StatelessWidget {
               textColor: ColorUtil.WHITE,
               textIsNormal: true,
               optionalTextSize: 18,
-              text: "19/07/2022",
+              text: "04/09/2022",
             ),
           ],
         ),

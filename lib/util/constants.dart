@@ -2,6 +2,17 @@
 class Constants {
   String appName = "PostMage";
 
+  //GENERAL
+  //TR
+  String TR_SAVE = "Kaydet";
+  String TR_OK = "Tamam";
+  String TR_CANCEL = "İptal";
+  String TR_CLOSE = "Kapat";
+  String TR_CONTINUE = "Devam et";
+  String TR_GENERAL_ERROR = "Hata oluştu";
+  String TR_EXIT = "Çıkış yap";
+  String TR_HELP = "Yardım";
+
   //tutorial
   String tutorialTitle =
       "Merhaba,\nHayatını kolaylaştırmak için\nhadi başlayalım.";
@@ -51,15 +62,6 @@ class Constants {
   String TR_MAKE_COMMENT = "Açıklama yap";
   String TR_SHARED_SUCCESSFULLY = "Post paylaşıldı";
 
-  //GENERAL
-  //TR
-  String TR_SAVE = "Kaydet";
-  String TR_OK = "Tamam";
-  String TR_CANCEL = "İptal";
-  String TR_CLOSE = "Kapat";
-  String TR_CONTINUE = "Devam et";
-  String TR_GENERAL_ERROR = "Hata oluştu";
-
   //#####################################################################
   //ERROR MESSAGES
   String errorMailMessage = "E-posta boş bırakılamaz.";
@@ -79,4 +81,13 @@ class Constants {
   String thirdText = "3";
   String firstText = "1";
   String pastOrder = "Geçmiş paylaşımlarım";
+
+  //Profile Page
+  String profilePageTitle = "Profil";
+
+  //Make Group
+  String makeGroupPageTitle = "Grup oluştur";
+
+  //Add User
+  String addUserPageTitle = "Kişi ekle";
 }

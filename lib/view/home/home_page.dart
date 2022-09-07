@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import '/widgets/menu/drawer_menu.dart';
 import '/view/home/home_widgets/main_list.dart';
 import '/util/router.dart';
 import '/widgets/appbar_border_radius.dart';
@@ -30,6 +31,7 @@ class HomePage extends StatelessWidget {
         },
         backgroundColor: ColorUtil.MAIN_COLOR,
       ),
+      drawer: customDrawerMenu(context),
       appBar: AppBar(
         //leading: Container(),
         title: SimpleText(
@@ -70,8 +72,9 @@ class HomePage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           RichTextField(
-              controller: addressController,
-              hintText: "Lütfen adresinizi giriniz"),
+            controller: addressController,
+            hintText: "Lütfen adresinizi giriniz",
+          ),
           addPaddingWhenKeyboardAppears()
         ],
       ),
@@ -91,4 +94,3 @@ class HomePage extends StatelessWidget {
     return SizedBox(height: isNeedPadding ? bottomOffset : hiddenKeyboard);
   }
 }
-

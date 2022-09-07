@@ -1,7 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
-import '../view/add_post/add_post_page.dart';
+import 'package:mdntls/view/profile/profile_page.dart';
+import '/view/add_post/add_post_page.dart';
 import '/view/tutorial/tutorial_page.dart';
 import '/view/login/sign_in_page.dart';
 import '/view/home/home_page.dart';
@@ -14,6 +15,7 @@ class CRouter {
   static String TUTORIAL = '/tutorial';
   static String ADD_POST = '/add_post';
   static String HOME_REMOVE_UNTIL = '/home_remove_until';
+  static String PROFILE = '/profile';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -45,6 +47,13 @@ class CRouter {
           builder: (_) => const AddPostPage(),
           settings: settings,
           fullscreenDialog: true,
+        );
+
+      case '/profile':
+        return CupertinoPageRoute(
+          builder: (_) => const ProfilePage(),
+          settings: settings,
+
         );
     }
     return null;

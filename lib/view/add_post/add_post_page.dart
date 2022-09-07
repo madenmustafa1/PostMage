@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import '../home/home_widgets/home_page_past_order_list.dart';
 import '/widgets/show_toast.dart';
-import '/view/add_post/ap_widgets/add_post_image.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';
 import '/widgets/calc_sized_box.dart';
@@ -14,6 +13,7 @@ import '/util/constants.dart';
 import '/widgets/text_and_button/simple_text.dart';
 import '/util/color_util.dart';
 import 'add_post_view_model.dart';
+import 'add_post_widgets/add_post_image.dart';
 
 class AddPostPage extends ConsumerStatefulWidget {
   const AddPostPage({Key? key}) : super(key: key);
@@ -59,6 +59,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
               RichTextField(
                 controller: content,
                 hintText: constants.TR_MAKE_COMMENT,
+                maxlines: 3,
               ),
               const CalcSizedBox(calc: 30),
               SimpleButton(
@@ -100,6 +101,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
 
     if (result) {
       ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);
+      Navigator.maybePop(context);
     } else {
       ShowToast.errorToast(constants.TR_GENERAL_ERROR);
     }

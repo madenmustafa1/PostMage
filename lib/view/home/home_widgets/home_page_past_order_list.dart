@@ -87,14 +87,8 @@ class HomePagePastOrderList extends StatelessWidget {
                   top: 6,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    SimpleText(
-                      textColor: ColorUtil.WHITE,
-                      textIsNormal: true,
-                      optionalTextSize: 18,
-                      text: "500 TL",
-                    ),
                     SimpleText(
                       textColor: ColorUtil.WHITE,
                       textIsNormal: true,
