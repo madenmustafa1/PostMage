@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../util/color_util.dart';
+import '../../util/color_util.dart';
 
 class BasicAppBar extends StatelessWidget with PreferredSizeWidget {
   final String title;

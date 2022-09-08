@@ -36,6 +36,7 @@ Widget customDrawerMenu(BuildContext context) {
           leading: const Icon(Icons.person),
           title: Text(constants.profilePageTitle),
           onTap: () {
+            Navigator.pop(context);
             Navigator.pushNamed(context, CRouter.PROFILE);
           },
         ),

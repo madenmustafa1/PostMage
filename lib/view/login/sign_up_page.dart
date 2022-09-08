@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '/widgets/text_and_button/phone_number_text_field.dart';
-import '/widgets/show_toast.dart';
+import '../../widgets/widget_util/show_toast.dart';
 import '/util/router.dart';
 import '/model/login/sign_up_model.dart';
 import '/dependency_injection/setup.dart';
@@ -10,7 +10,7 @@ import '/model/login/login_model.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '/util/constants.dart';
-import '/widgets/calc_sized_box.dart';
+import '../../widgets/widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/custom_rich_text.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';

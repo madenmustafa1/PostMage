@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 import '/util/app_util.dart';
-import '../box_decoration.dart';
+import '../widget_util/box_decoration.dart';
 
 Widget showListImage({
   required BuildContext context,

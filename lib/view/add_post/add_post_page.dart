@@ -2,12 +2,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import '../home/home_widgets/home_page_past_order_list.dart';
-import '/widgets/show_toast.dart';
+import '/widgets/text_and_button/switch_button.dart';
+import '/widgets/widget_util/show_toast.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';
-import '/widgets/calc_sized_box.dart';
-import '/widgets/appbar_border_radius.dart';
+import '/widgets/widget_util/calc_sized_box.dart';
+import '/widgets/widget_util/appbar_border_radius.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 import '/widgets/text_and_button/simple_text.dart';
@@ -29,6 +29,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   final ImagePicker _picker = ImagePicker();
   Uint8List? selectedImageBytes;
   AddPostViewModel viewModel = getIt<AddPostViewModel>();
+  bool privateShareSwitched = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +62,22 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
                 hintText: constants.TR_MAKE_COMMENT,
                 maxlines: 3,
               ),
-              const CalcSizedBox(calc: 30),
+              const CalcSizedBox(calc: 100),
+              CustomSwitchButton(
+                  text: "Özel paylaş",
+                  switchCallback: (switchValue) {
+                    privateShareSwitched = switchValue;
+                  }),
+              const CalcSizedBox(calc: 20),
               SimpleButton(
                 buttonText: constants.TR_SAVE,
                 onPressed: () {
                   saveButton();
                 },
               ),
-              const CalcSizedBox(calc: 20),
+
               //ListView
-              HomePagePastOrderList()
+              //HomePagePastOrderList()
             ],
           ),
         ),

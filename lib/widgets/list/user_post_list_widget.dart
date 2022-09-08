@@ -6,12 +6,12 @@ import '/dependency_injection/setup.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '/util/constants.dart';
-import '/widgets/box_decoration.dart';
-import '/widgets/calc_sized_box.dart';
+import '../widget_util/box_decoration.dart';
+import '../widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/simple_text.dart';
 
-class MainList extends StatelessWidget {
-  MainList({Key? key}) : super(key: key);
+class UserPostListWidget extends StatelessWidget {
+  UserPostListWidget({Key? key}) : super(key: key);
 
   final Constants constants = getIt<Constants>();
 

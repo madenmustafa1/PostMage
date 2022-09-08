@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/util/color_util.dart';
-import '/widgets/calc_sized_box.dart';
+import '../../../widgets/widget_util/calc_sized_box.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 import '/util/app_util.dart';

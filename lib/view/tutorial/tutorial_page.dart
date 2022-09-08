@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import '/view/tutorial/tutorial_top_widget.dart';
-import '/widgets/calc_sized_box.dart';
+import '../../widgets/widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/simple_button.dart';
 import '/util/router.dart';
 import '/util/color_util.dart';

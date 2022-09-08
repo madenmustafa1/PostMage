@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '/util/app_util.dart';
 import '/util/color_util.dart';
-import '/widgets/box_decoration.dart';
+import '../../../widgets/widget_util/box_decoration.dart';
 
 class AddPostImage extends StatelessWidget {
   const AddPostImage({

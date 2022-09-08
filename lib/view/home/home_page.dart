@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import '/widgets/menu/drawer_menu.dart';
-import '/view/home/home_widgets/main_list.dart';
+import '../../widgets/list/user_post_list_widget.dart';
 import '/util/router.dart';
-import '/widgets/appbar_border_radius.dart';
+import '../../widgets/widget_util/appbar_border_radius.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
-import '/widgets/calc_sized_box.dart';
+import '../../widgets/widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/simple_text.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
@@ -53,7 +53,7 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CalcSizedBox(calc: 65),
-              MainList(),
+              UserPostListWidget(),
             ],
           ),
         ),
