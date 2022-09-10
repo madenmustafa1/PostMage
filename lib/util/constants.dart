@@ -62,20 +62,7 @@ class Constants {
   String TR_MAKE_COMMENT = "Açıklama yap";
   String TR_SHARED_SUCCESSFULLY = "Post paylaşıldı";
 
-  //#####################################################################
-  //ERROR MESSAGES
-  String errorMailMessage = "E-posta boş bırakılamaz.";
-  String errorMailValidationMessage = "Lütfen geçerli bir E-posta giriniz.";
-  String errorUsernameMessage = "Kullanıcı adı boş bırakılamaz.";
-  String errorPasswordMessage = "Şifre boş bırakılamaz.";
-  String errorPasswordNotMatchMessage =
-      "Şifreler uyuşmuyor, lütfen kontrol ediniz.";
-
-  //SUCCESS MESSAGES
-  //
-  String loginSuccessMessage = "Giriş başarılı.";
-
-  //Home Page
+    //Home Page
   String homePageTitle = "Ana sayfa";
   String secondText = "2";
   String thirdText = "3";
@@ -90,4 +77,23 @@ class Constants {
 
   //Add User
   String addUserPageTitle = "Kişi ekle";
+  String addUserPageSearchUserId = "Kullanıcı adıyla bul";
+  String addUserPageScanQR = "QR Okut";
+
+
+
+  //#####################################################################
+  //ERROR MESSAGES
+  String errorMailMessage = "E-posta boş bırakılamaz.";
+  String errorMailValidationMessage = "Lütfen geçerli bir E-posta giriniz.";
+  String errorUsernameMessage = "Kullanıcı adı boş bırakılamaz.";
+  String errorPasswordMessage = "Şifre boş bırakılamaz.";
+  String errorPasswordNotMatchMessage =
+      "Şifreler uyuşmuyor, lütfen kontrol ediniz.";
+
+  //SUCCESS MESSAGES
+  //
+  String loginSuccessMessage = "Giriş başarılı.";
+
+
 }

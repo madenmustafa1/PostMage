@@ -46,6 +46,7 @@ Widget customDrawerMenu(BuildContext context) {
           title: Text(constants.addUserPageTitle),
           onTap: () {
             Navigator.pop(context);
+            Navigator.pushNamed(context, CRouter.ADD_USER);
           },
         ),
         //MakeGroupPageTitle

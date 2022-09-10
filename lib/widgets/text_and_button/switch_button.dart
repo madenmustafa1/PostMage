@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mdntls/util/app_util.dart';
-import 'package:mdntls/widgets/text_and_button/simple_text.dart';
+import '/widgets/text_and_button/simple_text.dart';
 
 class CustomSwitchButton extends StatefulWidget {
   const CustomSwitchButton({

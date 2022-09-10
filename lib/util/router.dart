@@ -1,7 +1,9 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
-import 'package:mdntls/view/profile/profile_page.dart';
+import '/view/add_user/add_user_page.dart';
+import '/view/profile/profile_page.dart';
+import '../view/qr_code/scan_qr_code_page.dart';
 import '/view/add_post/add_post_page.dart';
 import '/view/tutorial/tutorial_page.dart';
 import '/view/login/sign_in_page.dart';
@@ -16,6 +18,8 @@ class CRouter {
   static String ADD_POST = '/add_post';
   static String HOME_REMOVE_UNTIL = '/home_remove_until';
   static String PROFILE = '/profile';
+  static String ADD_USER = '/add_user';
+  static String QR_CODE = '/qr_code';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -53,7 +57,19 @@ class CRouter {
         return CupertinoPageRoute(
           builder: (_) => const ProfilePage(),
           settings: settings,
+        );
 
+      case '/add_user':
+        return CupertinoPageRoute(
+          builder: (_) => const AddUserPage(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+
+      case '/qr_code':
+        return CupertinoPageRoute(
+          builder: (_) => const ScanQRCodePage(),
+          settings: settings,
         );
     }
     return null;
