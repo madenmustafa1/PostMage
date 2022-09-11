@@ -1,6 +1,6 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import 'color_extension.dart';
 
@@ -19,6 +19,8 @@ class ColorUtil {
   //WHITE = E8E8E8  F4F4F2
   static Color GREY_PLATINUM = HexColor.fromHex('#E5E6E8');
   static Color GREY_PLATINUM_2 = HexColor.fromHex('#d9d9d9');
+
+  static Color BLACK = Colors.black;
 }
 
 /*

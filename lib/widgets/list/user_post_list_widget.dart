@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/widgets/list/post_bottom_row.dart';
 import '/widgets/image/show_list_image.dart';
 import '/widgets/widget_util/box_decorations.dart';
 import '/dependency_injection/setup.dart';
@@ -30,8 +31,6 @@ class UserPostListWidget extends StatelessWidget {
     );
   }
 
-
-
   Widget listViewItem(BuildContext context, int item) {
     return Column(
       children: [
@@ -58,7 +57,9 @@ class UserPostListWidget extends StatelessWidget {
                 ),
                 userImageDescription(),
                 const CalcSizedBox(calc: 50),
-                postDateText(context)
+                const PostBottomRowWidget(),
+                const CalcSizedBox(calc: 180),
+                likeSizeText()
               ],
             ),
           ),
@@ -85,23 +86,18 @@ class UserPostListWidget extends StatelessWidget {
     );
   }
 
-  Flexible postDateText(BuildContext context) {
+  Widget likeSizeText() {
     return Flexible(
       child: Padding(
-        padding: EdgeInsets.only(
-          left: AppUtil.getWidth(context) / 20,
-          right: AppUtil.getWidth(context) / 20,
+        padding: const EdgeInsets.only(
+          left: 15,
+          right: 15,
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SimpleText(
-              textColor: ColorUtil.WHITE,
-              textIsNormal: true,
-              optionalTextSize: 18,
-              text: "04/09/2022",
-            ),
-          ],
+        child: SimpleText(
+          text: "Liked by Mustafa Maden and 27 other",
+          optionalTextSize: 16,
+          textColor: ColorUtil.WHITE,
+          textIsNormal: true,
         ),
       ),
     );

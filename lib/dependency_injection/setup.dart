@@ -12,6 +12,4 @@ void setup() {
   getIt.registerLazySingleton<AddPostViewModel>(() => AddPostViewModel());
 
   getIt.registerFactory<PermissionUtil>(() => PermissionUtil());
-
-
 }

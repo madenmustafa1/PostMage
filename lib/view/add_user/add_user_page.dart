@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mdntls/util/color_util.dart';
 import 'package:mdntls/util/permission_util.dart';
 import 'package:mdntls/util/router.dart';
+import 'package:mdntls/widgets/text_and_button/simple_text.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
 import '/util/app_util.dart';
 import '/widgets/column_and_row/custom_icon_row.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
@@ -55,6 +58,25 @@ class _AddUserPageState extends State<AddUserPage> {
                   callback: () {
                     Navigator.pushNamed(context, CRouter.QR_CODE);
                   },
+                ),
+                const CalcSizedBox(calc: 14),
+                Divider(
+                  color: ColorUtil.BLACK,
+                  thickness: 1.5,
+                ),
+                const CalcSizedBox(calc: 70),
+                SimpleText(
+                  text: "#mustafa_maden",
+                  optionalTextSize: AppUtil.getHeight(context) / 20,
+                ),
+                const CalcSizedBox(calc: 80),
+                PrettyQr(
+                  image: const AssetImage('assets/images/qr_code_icon.png'),
+                  typeNumber: 3,
+                  size: 250,
+                  data: 'https://www.google.com',
+                  errorCorrectLevel: QrErrorCorrectLevel.M,
+                  roundEdges: true,
                 ),
               ],
             ),
