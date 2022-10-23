@@ -1,13 +1,29 @@
-import 'package:mdntls/model/login/user_model.dart';
-
-class LoginControlModel {
-  final String message;
+class LoginModel {
+  final String? message;
   final bool isSucces;
-  final UserModel? userModel;
+  final LoginTokenModel? userModel;
 
-  LoginControlModel({
-    required this.message,
+  LoginModel({
+    this.message,
     required this.isSucces,
-    this.userModel
+    this.userModel,
   });
+}
+
+class LoginTokenModel {
+  String? token;
+  String? userId;
+  bool? isSuccess;
+
+  LoginTokenModel({
+    this.token,
+    this.userId,
+    this.isSuccess,
+  });
+
+  LoginTokenModel.fromJson(Map<String, dynamic> json) {
+    token = json['token'];
+    userId = json['userId'];
+    isSuccess = json['isSuccess'];
+  }
 }

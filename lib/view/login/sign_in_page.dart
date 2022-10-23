@@ -94,13 +94,13 @@ class SignInPage extends StatelessWidget {
     String username = usernameController.text;
     String password = passwordController.text;
 
-    LoginControlModel result = await loginViewModel.signIn(username, password);
+    LoginModel result = await loginViewModel.signIn(username, password);
 
     if (result.isSucces) {
       Navigator.pushNamedAndRemoveUntil(
           context, CRouter.HOME, (route) => false);
     } else {
-      ShowToast.errorToast(result.message);
+      ShowToast.errorToast(result.message ?? "QQQQ");
     }
   }
 }

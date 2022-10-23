@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mdntls/services/repo/login_repository.dart';
+import 'package:mdntls/services/service/login_service.dart';
 import '/util/permission_util.dart';
 import '/view/add_post/add_post_view_model.dart';
 import '/util/constants.dart';
@@ -12,4 +15,8 @@ void setup() {
   getIt.registerLazySingleton<AddPostViewModel>(() => AddPostViewModel());
 
   getIt.registerFactory<PermissionUtil>(() => PermissionUtil());
+
+  getIt.registerLazySingleton<LoginRepository>(() => LoginRepository());
+  getIt.registerLazySingleton<LoginService>(() => LoginService());
+  getIt.registerLazySingleton<Dio>(() => Dio());
 }

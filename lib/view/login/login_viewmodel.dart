@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-
-import '/model/login/user_model.dart';
+import '/model/login/sign_in_model.dart';
+import '/services/repo/login_repository.dart';
 import '/dependency_injection/setup.dart';
 import '/model/login/login_model.dart';
 import '/model/login/sign_up_model.dart';
@@ -8,21 +8,14 @@ import '/util/constants.dart';
 
 class LoginViewModel {
   Constants constants = getIt<Constants>();
+  LoginRepository loginRepository = getIt<LoginRepository>();
 
-  Future<LoginControlModel> signIn(String email, String password) async {
-    UserModel userModel =
-        UserModel(mail: "testmail@gmail.com", userUUID: "userUUID");
-    return LoginControlModel(
-      message: constants.loginSuccessMessage,
-      isSucces: true,
-      userModel: userModel,
-    );
-
+  Future<LoginModel> signIn(String email, String password) async {
     String errorDesc = "";
     try {
       if (email.trim().isEmpty) {
         errorDesc = "E-mail alanı boş bırakılamaz";
-        return LoginControlModel(
+        return LoginModel(
           message: errorDesc,
           isSucces: false,
         );
@@ -30,88 +23,67 @@ class LoginViewModel {
 
       if (password.trim().isEmpty) {
         errorDesc = "Şifre alanı boş bırakılamaz";
-        return LoginControlModel(
+        return LoginModel(
           message: errorDesc,
           isSucces: false,
         );
       }
 
-      //UserModel userModel = await loginRepository.signIn(email, password);
-      UserModel userModel =
-          UserModel(mail: "testmail@gmail.com", userUUID: "userUUID");
-      return LoginControlModel(
-        message: constants.loginSuccessMessage,
-        isSucces: true,
-        userModel: userModel,
+      return await loginRepository.signIn(
+        SignInRequestModel(
+          mail: email,
+          password: password,
+        ),
       );
     } catch (e) {
-      errorDesc = e.toString();
+      return LoginModel(
+        message: errorDesc,
+        isSucces: false,
+      );
     }
-    return LoginControlModel(
-      message: errorDesc,
-      isSucces: false,
-    );
   }
 
-  Future<LoginControlModel> signUp(SignUpModel signUpModel) async {
-    String mail = signUpModel.mail.trim();
-    String username = signUpModel.username.trim();
-    String password = signUpModel.password.trim();
-    String rePassword = signUpModel.rePassword.trim();
+  Future<LoginModel> signUp(SignUpRequestModel signUpModel) async {
+    String mail = signUpModel.mail?.trim() ?? "";
+    String username = signUpModel.nameSurname?.trim() ?? "";
+    String password = signUpModel.password?.trim() ?? "";
+    String rePassword = signUpModel.password?.trim() ?? "";
 
     if (mail.isEmpty) {
-      return LoginControlModel(
-          message: constants.errorMailMessage, isSucces: false);
+      return LoginModel(message: constants.errorMailMessage, isSucces: false);
     }
     if (!emailValidation(mail)) {
-      return LoginControlModel(
+      return LoginModel(
         message: constants.errorMailValidationMessage,
         isSucces: false,
       );
     }
 
     if (username.isEmpty) {
-      return LoginControlModel(
+      return LoginModel(
           message: constants.errorUsernameMessage, isSucces: false);
     }
 
     if (password.isEmpty) {
-      return LoginControlModel(
+      return LoginModel(
           message: constants.errorPasswordMessage, isSucces: false);
     }
 
     if (rePassword.isEmpty) {
-      return LoginControlModel(
+      return LoginModel(
         message: constants.errorPasswordMessage,
         isSucces: false,
       );
     }
 
     if (password != rePassword) {
-      return LoginControlModel(
+      return LoginModel(
         message: constants.errorPasswordNotMatchMessage,
         isSucces: false,
       );
     }
 
-    String errorDesc = "";
-    bool isSuccess = true;
-    UserModel? userModel;
-    try {
-      //userModel = await loginRepository.signUp(signUpModel);
-    } catch (e) {
-      debugPrint(e.toString());
-      isSuccess = false;
-      errorDesc = e.toString();
-    }
-
-    return LoginControlModel(
-      message: isSuccess ? constants.loginSuccessMessage : errorDesc,
-      isSucces: isSuccess,
-      userModel: userModel,
-    );
-
-    //return LoginControlModel(message: "", isSucces: true);
+    return await loginRepository.signUp(signUpModel);
   }
 
   bool emailValidation(String email) {

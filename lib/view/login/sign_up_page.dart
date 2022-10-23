@@ -1,16 +1,16 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import '/widgets/text_and_button/phone_number_text_field.dart';
-import '../../widgets/widget_util/show_toast.dart';
-import '/util/router.dart';
 import '/model/login/sign_up_model.dart';
+import '/widgets/text_and_button/phone_number_text_field.dart';
+import '/widgets/widget_util/show_toast.dart';
+import '/util/router.dart';
 import '/dependency_injection/setup.dart';
 import '/model/login/login_model.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '/util/constants.dart';
-import '../../widgets/widget_util/calc_sized_box.dart';
+import '/widgets/widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/custom_rich_text.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';
@@ -108,19 +108,22 @@ class SignUpPage extends StatelessWidget {
   }
 
   void signUp(BuildContext context) async {
-    SignUpModel signUpModel = SignUpModel(
-      mail: mailController.text,
-      username: usernameController.text,
-      password: passwordController.text,
-      rePassword: rePasswordController.text,
-    );
+    SignUpRequestModel signUpModel = SignUpRequestModel(
+        mail: mailController.text,
+        nameSurname: usernameController.text,
+        password: passwordController.text,
+        phoneNumber: phoneNumberController.text);
 
-    LoginControlModel result = await loginViewModel.signUp(signUpModel);
+    LoginModel result = await loginViewModel.signUp(signUpModel);
+
     if (result.isSucces) {
       Navigator.pushNamedAndRemoveUntil(
-          context, CRouter.HOME, (route) => false);
+        context,
+        CRouter.HOME,
+        (route) => false,
+      );
     } else {
-      ShowToast.errorToast(result.message);
+      ShowToast.errorToast(result.message ?? "Hata");
     }
   }
 }

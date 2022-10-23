@@ -26,6 +26,7 @@ dependencies:
   pretty_qr_code: ^2.0.2
   permission_handler: ^10.0.0
   line_icons: ^2.0.1
+  dio: ^4.0.6
 
 dev_dependencies:
   flutter_test:

@@ -23,12 +23,14 @@ class PostBottomRowWidget extends StatelessWidget {
             Row(
               children: [
                 IconButton(
+                  color: ColorUtil.WHITE,
                   onPressed: () {},
                   icon: IconsUtil.likeIcon(
                     size: 25,
                   ),
                 ),
                 IconButton(
+                  color: ColorUtil.WHITE,
                   onPressed: () {},
                   icon: IconsUtil.commentIcon(
                     size: 25,

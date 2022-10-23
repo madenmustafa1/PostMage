@@ -58,7 +58,7 @@ class UserPostListWidget extends StatelessWidget {
                 userImageDescription(),
                 const CalcSizedBox(calc: 50),
                 const PostBottomRowWidget(),
-                const CalcSizedBox(calc: 180),
+                const CalcSizedBox(calc: 100),
                 likeSizeText()
               ],
             ),
