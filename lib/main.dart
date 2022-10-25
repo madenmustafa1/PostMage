@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/model/login/login_model.dart';
+import '/util/app_user.dart';
+import '/view/home/home_page.dart';
 import '/util/router.dart';
 import '/view/onboarding/onboarding_screen.dart';
 import '/util/responsive_constants.dart';
@@ -8,6 +11,7 @@ import 'package:responsive_framework/responsive_wrapper.dart';
 import 'package:responsive_framework/utils/scroll_behavior.dart';
 import '/util/color_util.dart';
 import 'dependency_injection/setup.dart';
+import 'util/shared_preferences.dart';
 
 void main() {
   setup();
@@ -18,11 +22,12 @@ void main() {
         statusBarBrightness: Brightness.light),
   );
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
+  final SharedPreferencesUtil preferencesUtil = getIt<SharedPreferencesUtil>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +46,32 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: OnboardingScreen(),
-      //home: TutorialPage(),
+      home: FutureBuilder(
+        future: authControl(),
+        builder: (BuildContext context, AsyncSnapshot<bool> value) {
+          if (value.data == null) {
+            return const Scaffold(
+              body: CircularProgressIndicator(),
+            );
+          }
+          if (!value.data!) return OnboardingScreen();
+          return HomePage();
+        },
+      ),
     );
+  }
+
+  Future<bool> authControl() async {
+    await preferencesUtil.initPrefs();
+    String? token = preferencesUtil.getString(preferencesUtil.TOKEN);
+    String? userId = preferencesUtil.getString(preferencesUtil.USER_ID);
+
+    if (token == null || token == "") return false;
+    AppUser.loginTokenModel = LoginTokenModel(
+      token: token,
+      userId: userId,
+      isSuccess: true,
+    );
+    return true;
   }
 }

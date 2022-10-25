@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:mdntls/util/app_user.dart';
 import '/widgets/appbar/basic_appbar.dart';
 import '/widgets/appbar/drawer_menu.dart';
 import '/widgets/list/user_post_list_widget.dart';
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorUtil.GREY_PLATINUM,
