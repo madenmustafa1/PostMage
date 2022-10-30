@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/model/posts/get_user_post_model.dart';
+import '/provider/home/home_page_provider.dart';
+import '/view/home/home_view_model.dart';
 import '/widgets/list/post_bottom_row.dart';
 import '/widgets/image/show_list_image.dart';
 import '/widgets/widget_util/box_decorations.dart';
@@ -10,28 +14,36 @@ import '../widget_util/box_decoration.dart';
 import '../widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/simple_text.dart';
 
-class UserPostListWidget extends StatelessWidget {
+class UserPostListWidget extends ConsumerWidget {
   UserPostListWidget({Key? key}) : super(key: key);
 
   final Constants constants = getIt<Constants>();
+  final HomeViewModel _homeViewModel = getIt<HomeViewModel>();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final followedUsersPostModel = ref.watch(getFollowedUsersPostsProvider);
+    observeData(ref);
     return Column(
       children: [
         SizedBox(
           height: AppUtil.getHeight(context) / 1.2,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: followedUsersPostModel != null ? followedUsersPostModel.length : 0,
             scrollDirection: Axis.vertical,
-            itemBuilder: (_, item) => listViewItem(context, item),
+            itemBuilder: (context, item) =>
+                listViewItem(context, item, followedUsersPostModel![item]),
           ),
         ),
       ],
     );
   }
 
-  Widget listViewItem(BuildContext context, int item) {
+  Widget listViewItem(
+    BuildContext context,
+    int item,
+    GetUserPostModel? model,
+  ) {
     return Column(
       children: [
         const CalcSizedBox(calc: 100),
@@ -51,11 +63,11 @@ class UserPostListWidget extends StatelessWidget {
                   child: SimpleText(
                     textColor: ColorUtil.WHITE,
                     optionalTextSize: 20,
-                    text: "Mustafa Maden",
+                    text: model?.nameSurname ?? "",
                     textIsNormal: true,
                   ),
                 ),
-                userImageDescription(),
+                userImageDescription(model),
                 const CalcSizedBox(calc: 50),
                 const PostBottomRowWidget(),
                 const CalcSizedBox(calc: 100),
@@ -69,7 +81,9 @@ class UserPostListWidget extends StatelessWidget {
     );
   }
 
-  Flexible userImageDescription() {
+  Flexible userImageDescription(
+    GetUserPostModel? model,
+  ) {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -79,7 +93,7 @@ class UserPostListWidget extends StatelessWidget {
         child: SimpleText(
           textColor: ColorUtil.WHITE,
           optionalTextSize: 20,
-          text: "Lorem ipsum lorem ipsum sit amed lorem ipsum",
+          text: model?.description ?? "",
           textIsNormal: true,
         ),
       ),
@@ -101,5 +115,16 @@ class UserPostListWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void observeData(WidgetRef ref) async {
+    //if()
+
+    var model = await _homeViewModel.getFollowedUsersPosts();
+
+    var usersPostsProvider = ref.read(getFollowedUsersPostsProvider);
+    if (model != null && usersPostsProvider == null) {
+      ref.read(getFollowedUsersPostsProvider.notifier).update(model);
+    }
   }
 }

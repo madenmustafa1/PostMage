@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
     String? userId = preferencesUtil.getString(preferencesUtil.USER_ID);
 
     if (token == null || token == "") return false;
-    AppUser.loginTokenModel = LoginTokenModel(
+    AppUser.LOGIN_TOKEN_MODEL = LoginTokenModel(
       token: token,
       userId: userId,
       isSuccess: true,
