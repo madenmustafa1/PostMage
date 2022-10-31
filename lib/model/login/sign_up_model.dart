@@ -21,12 +21,12 @@ class SignUpRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data =  <String, dynamic>{};
     data['nameSurname'] = nameSurname;
     data['mail'] = mail;
     data['password'] = password;
     data['phoneNumber'] = phoneNumber;
-    data['gender'] = this.gender;
+    data['gender'] = gender;
     return data;
   }
 }

@@ -5,7 +5,7 @@ class GetUserPostModel {
     this.nameSurname,
     this.groupId,
     required this.creationTime,
-    required this.likeUserId,
+    this.likeUserId,
     this.comment,
     required this.objectId,
     required this.userId,
@@ -15,7 +15,7 @@ class GetUserPostModel {
   String? description;
   String? groupId;
   late final int creationTime;
-  late final List<String?>? likeUserId;
+  List<String?>? likeUserId;
   List<Comment?>? comment;
   late final String objectId;
   late final String userId;
@@ -36,7 +36,9 @@ class GetUserPostModel {
         comment =
             List.from(json['comment']).map((e) => Comment.fromJson(e)).toList();
       }
-    } catch (e) {}
+    } catch (e) {
+      e.toString();
+    }
 
     objectId = json['objectId'];
     userId = json['userId'];

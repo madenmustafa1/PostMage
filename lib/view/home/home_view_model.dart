@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:mdntls/services/data_layer.dart';
-import '../../model/posts/get_user_post_model.dart';
+
+import '/services/data_layer.dart';
+import '/model/posts/get_user_post_model.dart';
 import '/services/repo/app_http_repository.dart';
 import '/dependency_injection/setup.dart';
 

@@ -84,10 +84,10 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
       ),
     );
   }
-
+ XFile? pickedFile;
   Future<void> takePhoto() async {
     try {
-      final XFile? pickedFile = await _picker.pickImage(
+       pickedFile = await _picker.pickImage(
         source: ImageSource.gallery,
         //maxWidth: maxWidth,
         //maxHeight: maxHeight,
@@ -95,7 +95,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
       );
 
       if (pickedFile != null) {
-        selectedImageBytes = await pickedFile.readAsBytes();
+        selectedImageBytes = await pickedFile!.readAsBytes();
         if (selectedImageBytes == null) return;
         setState(() {});
       }
@@ -104,7 +104,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   }
 
   void saveButton() async {
-    var result = await viewModel.sharePost(selectedImageBytes, content.text);
+    var result = await viewModel.sharePost(selectedImageBytes, content.text, pickedFile);
 
     if (result) {
       ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);

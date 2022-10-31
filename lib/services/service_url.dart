@@ -6,6 +6,7 @@ class ServiceUrl {
   //User Posts Route
   static const String USER_POSTS = "user-posts";
   static const String MY_POSTS = "/my-posts";
+  static const String ADD_POSTS = "/add-posts";
 
   static const SUCCESS = 200;
 }

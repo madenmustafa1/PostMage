@@ -1,15 +1,24 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: must_be_immutable
 
+import 'package:flutter/material.dart';
+import '/util/date_util.dart';
+import '/model/posts/get_user_post_model.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '../other/icons_util.dart';
 import '../text_and_button/simple_text.dart';
 
 class PostBottomRowWidget extends StatelessWidget {
-  const PostBottomRowWidget({Key? key}) : super(key: key);
+  PostBottomRowWidget({
+    Key? key,
+    required this.model,
+  }) : super(key: key);
+  GetUserPostModel? model;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Flexible(
       child: Padding(
         padding: EdgeInsets.only(
@@ -42,7 +51,7 @@ class PostBottomRowWidget extends StatelessWidget {
               textColor: ColorUtil.WHITE,
               textIsNormal: true,
               optionalTextSize: 18,
-              text: "04/09/2022",
+              text: DateUtil.convertTimeMillisToDate(model?.creationTime),
             ),
           ],
         ),

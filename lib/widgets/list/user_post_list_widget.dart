@@ -29,7 +29,9 @@ class UserPostListWidget extends ConsumerWidget {
         SizedBox(
           height: AppUtil.getHeight(context) / 1.2,
           child: ListView.builder(
-            itemCount: followedUsersPostModel != null ? followedUsersPostModel.length : 0,
+            itemCount: followedUsersPostModel != null
+                ? followedUsersPostModel.length
+                : 0,
             scrollDirection: Axis.vertical,
             itemBuilder: (context, item) =>
                 listViewItem(context, item, followedUsersPostModel![item]),
@@ -54,7 +56,10 @@ class UserPostListWidget extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                showListImage(context: context, item: item),
+                showListImage(
+                  context: context,
+                  model: model,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(
                     top: 10,
@@ -69,9 +74,9 @@ class UserPostListWidget extends ConsumerWidget {
                 ),
                 userImageDescription(model),
                 const CalcSizedBox(calc: 50),
-                const PostBottomRowWidget(),
+                PostBottomRowWidget(model: model),
                 const CalcSizedBox(calc: 100),
-                likeSizeText()
+                likeSizeText(model)
               ],
             ),
           ),
@@ -100,7 +105,7 @@ class UserPostListWidget extends ConsumerWidget {
     );
   }
 
-  Widget likeSizeText() {
+  Widget likeSizeText(GetUserPostModel? model) {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.only(
@@ -108,13 +113,18 @@ class UserPostListWidget extends ConsumerWidget {
           right: 15,
         ),
         child: SimpleText(
-          text: "Liked by Mustafa Maden and 27 other",
+          text: likeText(model),
           optionalTextSize: 16,
           textColor: ColorUtil.WHITE,
           textIsNormal: true,
         ),
       ),
     );
+  }
+
+  String likeText(GetUserPostModel? model) {
+    if (model == null || model.likeUserId == null) return "0 Likes";
+    return model.likeUserId!.length.toString() + " Likes";
   }
 
   void observeData(WidgetRef ref) async {
