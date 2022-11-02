@@ -17,7 +17,9 @@ class AppHttpService implements AppHttpInterface {
     int limit = 100,
   }) async {
     Response<dynamic> response = await dio.get(
-      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.MY_POSTS,
+      ServiceUrl.BASE_URL +
+          ServiceUrl.USER_POSTS +
+          ServiceUrl.FOLLOWED_USERS_POSTS,
       options: Options(
         headers: {
           "authorization":
@@ -81,6 +83,37 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: true,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<List<GetUserPostModel?>?>> getMyPosts() async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.MY_POSTS,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: (response.data as List)
+          .map((x) => GetUserPostModel.fromJson(x))
+          .toList(),
       status: DataStatus.SUCCESS,
     );
   }

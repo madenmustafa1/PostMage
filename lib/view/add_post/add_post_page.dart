@@ -108,7 +108,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
 
     if (result) {
       ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);
-      Navigator.maybePop(context);
+      Navigator.maybePop(context, true);
     } else {
       ShowToast.errorToast(constants.TR_GENERAL_ERROR);
     }

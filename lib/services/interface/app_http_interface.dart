@@ -7,5 +7,7 @@ abstract class AppHttpInterface {
     int limit = 100,
   });
 
+  Future<DataLayer<List<GetUserPostModel?>?>> getMyPosts();
+
   Future<DataLayer<bool>> addPost(AddPostModel model);
 }

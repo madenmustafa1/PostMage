@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '/enum/list_type.dart';
+import '/provider/home/home_page_provider.dart';
 import '/widgets/appbar/basic_appbar.dart';
 import '/widgets/appbar/drawer_menu.dart';
 import '/widgets/list/user_post_list_widget.dart';
@@ -11,6 +13,7 @@ import '/util/color_util.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
+import 'home_view_model.dart';
 
 class HomePage extends ConsumerWidget {
   HomePage({
@@ -18,17 +21,18 @@ class HomePage extends ConsumerWidget {
   }) : super(key: key);
 
   final Constants _constants = getIt<Constants>();
+  final HomeViewModel _homeViewModel = getIt<HomeViewModel>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: ColorUtil.GREY_PLATINUM,
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, CRouter.ADD_POST);
+        onPressed: () async {
+          var result = await Navigator.pushNamed(context, CRouter.ADD_POST);
+          if (result != null) forceUpdatePostList(ref);
         },
         backgroundColor: ColorUtil.MAIN_COLOR,
       ),
@@ -43,11 +47,22 @@ class HomePage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const CalcSizedBox(calc: 65),
-              UserPostListWidget(),
+              UserPostListWidget(
+                listType: ListType.HOME,
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  void forceUpdatePostList(WidgetRef ref) async {
+    var model = await _homeViewModel.getUsersPosts(
+      listType: ListType.HOME,
+    );
+    if (model != null) {
+      ref.read(getFollowedUsersPostsProvider.notifier).update(model);
+    }
   }
 }
