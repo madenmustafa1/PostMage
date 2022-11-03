@@ -55,7 +55,7 @@ class CRouter {
 
       case '/profile':
         return CupertinoPageRoute(
-          builder: (_) => const ProfilePage(),
+          builder: (_) => ProfilePage(),
           settings: settings,
         );
 

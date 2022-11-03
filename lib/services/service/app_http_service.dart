@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mdntls/model/profile/group_profile_info.dart';
 import '/model/posts/add_post_model.dart';
 import '/util/app_user.dart';
 import '../data_layer.dart';
@@ -116,5 +117,40 @@ class AppHttpService implements AppHttpInterface {
           .toList(),
       status: DataStatus.SUCCESS,
     );
+  }
+
+  @override
+  Future<DataLayer<UserProfileInfoModel?>> getMyProfileInfo() async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.PROFILE + ServiceUrl.MY_PROFILE,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: UserProfileInfoModel.fromJson(response.data),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model) async {
+    // TODO: implement putMyProfileInfo
+    throw UnimplementedError();
   }
 }

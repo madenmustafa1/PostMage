@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mdntls/services/repo/app_http_repository.dart';
 import 'package:mdntls/services/service/app_http_service.dart';
 import 'package:mdntls/view/home/home_view_model.dart';
+import 'package:mdntls/view/profile/profile_viewmodel.dart';
 import '/services/repo/login_repository.dart';
 import '/services/service/login_service.dart';
 import '/util/shared_preferences.dart';
@@ -18,6 +19,7 @@ void setup() {
   getIt.registerLazySingleton<LoginViewModel>(() => LoginViewModel());
   getIt.registerLazySingleton<AddPostViewModel>(() => AddPostViewModel());
   getIt.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
+  getIt.registerLazySingleton<ProfileViewModel>(() => ProfileViewModel());
 
 
   getIt.registerFactory<PermissionUtil>(() => PermissionUtil());

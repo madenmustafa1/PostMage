@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mdntls/enum/list_type.dart';
-import 'package:mdntls/widgets/widget_util/calc_sized_box.dart';
-import 'package:mdntls/widgets/text_and_button/simple_text.dart';
+import '/view/profile/profile_viewmodel.dart';
+import '/dependency_injection/setup.dart';
+import '/enum/list_type.dart';
+import '/widgets/widget_util/calc_sized_box.dart';
+import '/widgets/text_and_button/simple_text.dart';
 import '/widgets/list/user_post_list_widget.dart';
 import '/widgets/appbar/basic_appbar.dart';
 import '/util/color_util.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  ProfilePage({
+    Key? key,
+  }) : super(key: key);
+
+  final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
 
   @override
   Widget build(BuildContext context) {
+    getMyProfileInfo();
     return Scaffold(
       backgroundColor: ColorUtil.GREY_PLATINUM,
       appBar: BasicAppBar(
@@ -71,16 +78,8 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
+
+  void getMyProfileInfo() async {
+    var result = await _profileViewModel.getMyProfileInfo();
+  }
 }
-
-
-/*
-
-Scaffold(
-      appBar: BasicAppBar(
-        title: "Profile",
-      ),
-      body: Container(),
-    );
-
-    */

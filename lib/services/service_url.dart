@@ -9,5 +9,9 @@ class ServiceUrl {
   static const String FOLLOWED_USERS_POSTS = "/followed-users-posts";
   static const String ADD_POSTS = "/add-posts";
 
+  //Profile
+  static const String PROFILE = "profile";
+  static const String MY_PROFILE = "/my-profile";
+
   static const SUCCESS = 200;
 }

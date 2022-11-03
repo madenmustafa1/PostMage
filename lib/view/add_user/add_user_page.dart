@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mdntls/util/color_util.dart';
-import 'package:mdntls/util/permission_util.dart';
-import 'package:mdntls/util/router.dart';
-import 'package:mdntls/widgets/text_and_button/simple_text.dart';
+import '/util/color_util.dart';
+import '/util/permission_util.dart';
+import '/util/router.dart';
+import '/widgets/text_and_button/simple_text.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import '/util/app_util.dart';
 import '/widgets/column_and_row/custom_icon_row.dart';
