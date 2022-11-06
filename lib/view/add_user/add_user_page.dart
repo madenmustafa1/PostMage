@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/model/profile/following_model.dart';
+import '../../model/profile/put_follower_data.dart';
+import '/model/profile/group_profile_info.dart';
+import '/provider/profile/profile_page_provider.dart';
+import '../profile/profile_viewmodel.dart';
 import '/util/color_util.dart';
 import '/util/permission_util.dart';
 import '/util/router.dart';
@@ -11,17 +17,20 @@ import '/widgets/appbar/basic_appbar.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 
-class AddUserPage extends StatefulWidget {
+class AddUserPage extends ConsumerStatefulWidget {
   const AddUserPage({Key? key}) : super(key: key);
 
   @override
-  State<AddUserPage> createState() => _AddUserPageState();
+  _AddUserPageState createState() => _AddUserPageState();
 }
 
-class _AddUserPageState extends State<AddUserPage> {
+class _AddUserPageState extends ConsumerState<AddUserPage> {
   final Constants constants = getIt<Constants>();
 
   final PermissionUtil _permissionUtil = getIt<PermissionUtil>();
+
+  final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
+  UserProfileInfoModel? _userProfileModel;
 
   @override
   void initState() {
@@ -29,10 +38,12 @@ class _AddUserPageState extends State<AddUserPage> {
     WidgetsBinding.instance?.addPostFrameCallback(
       (_) => _permissionUtil.permissonCameraHandler(),
     );
+    _userProfileModel = ref.read(getProfileInfoProvider);
   }
 
   @override
   Widget build(BuildContext context) {
+    getMyProfileInfo();
     return Scaffold(
       appBar: BasicAppBar(title: constants.addUserPageTitle),
       body: SingleChildScrollView(
@@ -55,8 +66,10 @@ class _AddUserPageState extends State<AddUserPage> {
                 CustomIconRow(
                   title: constants.addUserPageScanQR,
                   icon: const Icon(Icons.qr_code_scanner_sharp, size: 30),
-                  callback: () {
-                    Navigator.pushNamed(context, CRouter.QR_CODE);
+                  callback: () async {
+                    var result =
+                        await Navigator.pushNamed(context, CRouter.QR_CODE);
+                    if (result != null) addUser(result);
                   },
                 ),
                 const CalcSizedBox(calc: 14),
@@ -66,7 +79,7 @@ class _AddUserPageState extends State<AddUserPage> {
                 ),
                 const CalcSizedBox(calc: 70),
                 SimpleText(
-                  text: "#mustafa_maden",
+                  text: "#" + (_userProfileModel?.nameSurname ?? ""),
                   optionalTextSize: AppUtil.getHeight(context) / 20,
                 ),
                 const CalcSizedBox(calc: 80),
@@ -74,7 +87,7 @@ class _AddUserPageState extends State<AddUserPage> {
                   image: const AssetImage('assets/images/qr_code_icon.png'),
                   typeNumber: 3,
                   size: 250,
-                  data: 'https://www.google.com',
+                  data: _userProfileModel?.userId ?? "",
                   errorCorrectLevel: QrErrorCorrectLevel.M,
                   roundEdges: true,
                 ),
@@ -84,5 +97,25 @@ class _AddUserPageState extends State<AddUserPage> {
         ),
       ),
     );
+  }
+
+  void getMyProfileInfo() async {
+    if (_userProfileModel != null) return;
+    _userProfileModel = ref.watch(getProfileInfoProvider);
+
+    var model = await _profileViewModel.getMyProfileInfo();
+    if (model.data != null && _userProfileModel == null) {
+      _userProfileModel = model.data;
+      ref.read(getProfileInfoProvider.notifier).update(model.data);
+    }
+  }
+
+  void addUser(Object? userId) async {
+    if (_userProfileModel == null || userId == null) return;
+    debugPrint(userId.toString());
+    var model =
+        PutFollowerDataModel(following: Following(userId: userId.toString()));
+    var res = await _profileViewModel.putFollowerData(model);
+    debugPrint(res.data.toString());
   }
 }

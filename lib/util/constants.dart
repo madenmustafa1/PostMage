@@ -54,7 +54,6 @@ class Constants {
 
   //Profile
   String TR_TUTORIAL_BUTTON = "Başla";
-  String TR_TUTORIAL_BOTTOM_INFO = "Yeni nesil alışveriş";
   String TUTORIAL_BG_IMAGE_URL = "assets/img/login_photo3.png";
 
   //Add Post
@@ -71,6 +70,7 @@ class Constants {
 
   //Profile Page
   String profilePageTitle = "Profil";
+  String profilePosts = "Paylaşımlar";
 
   //Make Group
   String makeGroupPageTitle = "Grup oluştur";

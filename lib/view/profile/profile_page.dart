@@ -1,4 +1,11 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pretty_qr_code/pretty_qr_code.dart';
+import '/widgets/appbar/drawer_menu.dart';
+import '/model/profile/group_profile_info.dart';
+import '/provider/profile/profile_page_provider.dart';
 import '/view/profile/profile_viewmodel.dart';
 import '/dependency_injection/setup.dart';
 import '/enum/list_type.dart';
@@ -8,20 +15,21 @@ import '/widgets/list/user_post_list_widget.dart';
 import '/widgets/appbar/basic_appbar.dart';
 import '/util/color_util.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends ConsumerWidget {
   ProfilePage({
     Key? key,
   }) : super(key: key);
 
   final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
+  UserProfileInfoModel? _userProfileModel;
 
   @override
-  Widget build(BuildContext context) {
-    getMyProfileInfo();
+  Widget build(BuildContext context, WidgetRef ref) {
+    getMyProfileInfo(ref);
     return Scaffold(
       backgroundColor: ColorUtil.GREY_PLATINUM,
       appBar: BasicAppBar(
-        title: "Profile",
+        title: constants.profilePageTitle,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -39,7 +47,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       const CalcSizedBox(calc: 60),
                       Text(
-                        'Erza Scarlet',
+                        _userProfileModel?.nameSurname ?? "",
                         style: TextStyle(
                           color: ColorUtil.MAIN_COLOR,
                           fontSize: 20.0,
@@ -56,12 +64,23 @@ class ProfilePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                const CalcSizedBox(calc: 80),
+                _userProfileModel != null
+                    ? PrettyQr(
+                        image:
+                            const AssetImage('assets/images/qr_code_icon.png'),
+                        typeNumber: 3,
+                        size: 100,
+                        data: _userProfileModel!.mail ?? "",
+                        errorCorrectLevel: QrErrorCorrectLevel.M,
+                        roundEdges: true,
+                      )
+                    : Container(),
                 const CalcSizedBox(calc: 30),
                 SimpleText(
-                  text: "ACCESS SCAN CODE",
-                  optionalTextSize: 40,
+                  text: constants.profilePosts,
+                  optionalTextSize: 30,
                 ),
-                const CalcSizedBox(calc: 50),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Divider(
@@ -79,7 +98,13 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  void getMyProfileInfo() async {
-    var result = await _profileViewModel.getMyProfileInfo();
+  void getMyProfileInfo(WidgetRef ref) async {
+    _userProfileModel = ref.watch(getProfileInfoProvider);
+
+    var model = await _profileViewModel.getMyProfileInfo();
+    if (model.data != null && _userProfileModel == null) {
+      _userProfileModel = model.data;
+      ref.read(getProfileInfoProvider.notifier).update(model.data);
+    }
   }
 }

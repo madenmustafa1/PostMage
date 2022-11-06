@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mdntls/model/profile/group_profile_info.dart';
+import 'package:mdntls/model/profile/put_follower_data.dart';
+import '/model/profile/group_profile_info.dart';
 import '/model/posts/add_post_model.dart';
 import '/util/app_user.dart';
 import '../data_layer.dart';
@@ -152,5 +153,35 @@ class AppHttpService implements AppHttpInterface {
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model) async {
     // TODO: implement putMyProfileInfo
     throw UnimplementedError();
+  }
+
+  @override
+  Future<DataLayer<bool>> putFollowerData(PutFollowerDataModel model) async {
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.PROFILE + ServiceUrl.FOLLOWER_DATA,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model,
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: response.data,
+      status: DataStatus.SUCCESS,
+    );
   }
 }

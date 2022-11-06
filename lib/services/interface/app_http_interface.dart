@@ -1,4 +1,5 @@
-import '../../model/profile/group_profile_info.dart';
+import '/model/profile/group_profile_info.dart';
+import '/model/profile/put_follower_data.dart';
 import '/model/posts/add_post_model.dart';
 import '../data_layer.dart';
 import '/model/posts/get_user_post_model.dart';
@@ -15,4 +16,6 @@ abstract class AppHttpInterface {
   Future<DataLayer<UserProfileInfoModel?>> getMyProfileInfo();
 
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model);
+
+  Future<DataLayer<bool>> putFollowerData(PutFollowerDataModel model);
 }

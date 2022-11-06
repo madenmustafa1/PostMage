@@ -31,6 +31,7 @@ class _ScanQRCodeViewState extends State<ScanQRCodePage> {
 
   @override
   Widget build(BuildContext context) {
+    _resultControl();
     return Scaffold(
       appBar: BasicAppBar(title: "QR Kod okut", shapeDisabled: true),
       body: Column(
@@ -69,5 +70,10 @@ class _ScanQRCodeViewState extends State<ScanQRCodePage> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void _resultControl() {
+    if (result == null) return;
+    Navigator.maybePop(context, result!.code);
   }
 }

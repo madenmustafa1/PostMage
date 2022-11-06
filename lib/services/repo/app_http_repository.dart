@@ -1,3 +1,4 @@
+import '/model/profile/put_follower_data.dart';
 import '/model/profile/group_profile_info.dart';
 import '/model/posts/add_post_model.dart';
 import '../data_layer.dart';
@@ -36,5 +37,10 @@ class AppHttpRepository implements AppHttpInterface {
   @override
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model) async {
     return await _appHttpService.putMyProfileInfo(model);
+  }
+
+  @override
+  Future<DataLayer<bool>> putFollowerData(PutFollowerDataModel model) async {
+    return await _appHttpService.putFollowerData(model);
   }
 }

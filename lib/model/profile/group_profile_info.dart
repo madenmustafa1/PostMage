@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
+import 'following_model.dart';
+
 class UserProfileInfoModel {
   UserProfileInfoModel({
     required this.nameSurname,
@@ -14,19 +18,19 @@ class UserProfileInfoModel {
     required this.followers,
     required this.creationTime,
   });
-  late final String nameSurname;
-  late final String mail;
-  late final String phoneNumber;
-  late final int gender;
+  late final String? nameSurname;
+  late final String? mail;
+  late final String? phoneNumber;
+  late final int? gender;
   late final String? profilePhotoUrl;
-  late final String userId;
-  late final List<Groups> groups;
-  late final int followersSize;
-  late final int followingSize;
-  late final int userRole;
-  late final List<Following> following;
-  late final List<Followers> followers;
-  late final int creationTime;
+  late final String? userId;
+  late final List<Groups?>? groups;
+  late final int? followersSize;
+  late final int? followingSize;
+  late final int? userRole;
+  late final List<Following?>? following;
+  late final List<Followers?>? followers;
+  late final int? creationTime;
 
   UserProfileInfoModel.fromJson(Map<String, dynamic> json) {
     nameSurname = json['nameSurname'];
@@ -35,7 +39,10 @@ class UserProfileInfoModel {
     gender = json['gender'];
     profilePhotoUrl = json['profilePhotoUrl'];
     userId = json['userId'];
-    groups = List.from(json['groups']).map((e) => Groups.fromJson(e)).toList();
+    if (json['groups'] != null) {
+      groups =
+          List.from(json['groups']).map((e) => Groups.fromJson(e)).toList();
+    }
     followersSize = json['followersSize'];
     followingSize = json['followingSize'];
     userRole = json['userRole'];
@@ -54,12 +61,12 @@ class UserProfileInfoModel {
     _data['gender'] = gender;
     _data['profilePhotoUrl'] = profilePhotoUrl;
     _data['userId'] = userId;
-    _data['groups'] = groups.map((e) => e.toJson()).toList();
+    _data['groups'] = groups?.map((e) => e?.toJson()).toList();
     _data['followersSize'] = followersSize;
     _data['followingSize'] = followingSize;
     _data['userRole'] = userRole;
-    _data['following'] = following.map((e) => e.toJson()).toList();
-    _data['followers'] = followers.map((e) => e.toJson()).toList();
+    _data['following'] = following?.map((e) => e?.toJson()).toList();
+    _data['followers'] = followers?.map((e) => e?.toJson()).toList();
     _data['creationTime'] = creationTime;
     return _data;
   }
@@ -79,16 +86,22 @@ class Groups {
   late final String groupName;
   late final String description;
   late final String photoName;
-  late final List<String> adminIds;
+  late final List<String?>? adminIds;
   late final int creationTime;
   late final List<GroupUsers> groupUsers;
 
-  Groups.fromJson(Map<String, dynamic> json) {
+  Groups.fromJson(Map<String, dynamic>? json) {
+    if (json == null) return;
     groupId = json['groupId'];
     groupName = json['groupName'];
     description = json['description'];
     photoName = json['photoName'];
-    adminIds = List.castFrom<String, String>(json['adminIds']);
+    if (json['adminIds'] != null) {
+      var res = List.castFrom<dynamic, dynamic>(json['adminIds']);
+      if (res.isNotEmpty) {
+        adminIds = List.castFrom<String?, String?>(json['adminIds']);
+      }
+    }
     creationTime = json['creationTime'];
 
     groupUsers = List.from(json['groupUsers'])
@@ -105,31 +118,6 @@ class Groups {
     _data['adminIds'] = adminIds;
     _data['creationTime'] = creationTime;
     _data['groupUsers'] = groupUsers;
-    return _data;
-  }
-}
-
-class Following {
-  Following({
-    required this.nameSurname,
-    required this.userId,
-    this.photoUrl,
-  });
-  late final String nameSurname;
-  late final String userId;
-  late final String? photoUrl;
-
-  Following.fromJson(Map<String, dynamic> json) {
-    nameSurname = json['nameSurname'];
-    userId = json['userId'];
-    photoUrl = json['photoUrl'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['nameSurname'] = nameSurname;
-    _data['userId'] = userId;
-    _data['photoUrl'] = photoUrl;
     return _data;
   }
 }
