@@ -1,10 +1,9 @@
 import 'dart:io';
 
 class AddPostModel {
-  
   File file;
   String? description;
-  String? groupId; 
+  String? groupId;
   AddPostModel({
     required this.file,
     this.description,

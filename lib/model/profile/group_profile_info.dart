@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'following_model.dart';
 
 class UserProfileInfoModel {

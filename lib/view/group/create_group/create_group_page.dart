@@ -1,48 +1,42 @@
+// ignore_for_file: must_be_immutable, prefer_const_constructors_in_immutables
 import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import '/widgets/text_and_button/switch_button.dart';
+import 'package:mdntls/services/data_layer.dart';
 import '/widgets/widget_util/show_toast.dart';
+import '../group_viewmodel.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
-import '/widgets/widget_util/appbar_border_radius.dart';
+import '../../add_post/add_post_widgets/add_post_image.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
-import '/widgets/text_and_button/simple_text.dart';
-import '/util/color_util.dart';
-import 'add_post_view_model.dart';
-import 'add_post_widgets/add_post_image.dart';
+import '/widgets/appbar/basic_appbar.dart';
 
-class AddPostPage extends ConsumerStatefulWidget {
-  const AddPostPage({Key? key}) : super(key: key);
+class CreateGroupPage extends ConsumerStatefulWidget {
+  CreateGroupPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  AddPostPageState createState() => AddPostPageState();
+  _CreateGroupPageState createState() => _CreateGroupPageState();
 }
 
-class AddPostPageState extends ConsumerState<AddPostPage> {
-  final Constants constants = getIt<Constants>();
-
-  TextEditingController content = TextEditingController();
-  final ImagePicker _picker = ImagePicker();
+class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
+  Constants constants = getIt<Constants>();
   Uint8List? selectedImageBytes;
-  AddPostViewModel viewModel = getIt<AddPostViewModel>();
-  bool privateShareSwitched = false;
+  TextEditingController content = TextEditingController();
+  final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
+
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: SimpleText(
-          text: constants.addPostAppTitle,
-          optionalTextSize: 25,
-          textColor: ColorUtil.WHITE,
-        ),
-        backgroundColor: ColorUtil.MAIN_COLOR,
-        shadowColor: null,
-        shape: AppbarWidgetUtil.appbarBorderRadius(),
+      appBar: BasicAppBar(
+        title: constants.groups,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -59,15 +53,11 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
               const CalcSizedBox(calc: 40),
               RichTextField(
                 controller: content,
-                hintText: constants.TR_MAKE_COMMENT,
+                hintText: constants.groupsTitle,
                 maxlines: 3,
               ),
               const CalcSizedBox(calc: 100),
-              CustomSwitchButton(
-                  text: "Özel paylaş",
-                  switchCallback: (switchValue) {
-                    privateShareSwitched = switchValue;
-                  }),
+
               const CalcSizedBox(calc: 20),
               SimpleButton(
                 buttonText: constants.TR_SAVE,
@@ -86,6 +76,7 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   }
 
   XFile? pickedFile;
+
   Future<void> takePhoto() async {
     try {
       pickedFile = await _picker.pickImage(
@@ -105,14 +96,17 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   }
 
   void saveButton() async {
-    var result =
-        await viewModel.sharePost(selectedImageBytes, content.text, pickedFile);
+    var result = await _groupViewModel.createGroup(content.text, pickedFile);
 
-    if (result) {
+    if (result.status == DataStatus.SUCCESS) {
       ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);
       Navigator.maybePop(context, true);
     } else {
-      ShowToast.errorToast(constants.TR_GENERAL_ERROR);
+      var message = result.errorData?.reason ?? "";
+      if (message == "") message = constants.TR_GENERAL_ERROR;
+      ShowToast.errorToast(
+        message,
+      );
     }
   }
 }

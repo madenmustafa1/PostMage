@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mdntls/view/group/group_viewmodel.dart';
 import '/services/repo/app_http_repository.dart';
 import '/services/service/app_http_service.dart';
 import '/view/home/home_view_model.dart';
@@ -15,19 +16,23 @@ import '/view/login/login_viewmodel.dart';
 final getIt = GetIt.instance;
 
 void setup() {
+
+  //Util
+  getIt.registerFactory<PermissionUtil>(() => PermissionUtil());
   getIt.registerLazySingleton<Constants>(() => Constants());
+
+  //ViewModel
   getIt.registerLazySingleton<LoginViewModel>(() => LoginViewModel());
   getIt.registerLazySingleton<AddPostViewModel>(() => AddPostViewModel());
   getIt.registerLazySingleton<HomeViewModel>(() => HomeViewModel());
   getIt.registerLazySingleton<ProfileViewModel>(() => ProfileViewModel());
-
-
-  getIt.registerFactory<PermissionUtil>(() => PermissionUtil());
+  getIt.registerLazySingleton<GroupViewModel>(() => GroupViewModel());
 
   //Service
   getIt.registerLazySingleton<LoginRepository>(() => LoginRepository());
   getIt.registerLazySingleton<LoginService>(() => LoginService());
 
+  //Repo
   getIt.registerLazySingleton<AppHttpRepository>(() => AppHttpRepository());
   getIt.registerLazySingleton<AppHttpService>(() => AppHttpService());
 

@@ -61,7 +61,7 @@ class Constants {
   String TR_MAKE_COMMENT = "Açıklama yap";
   String TR_SHARED_SUCCESSFULLY = "Post paylaşıldı";
 
-    //Home Page
+  //Home Page
   String homePageTitle = "Ana sayfa";
   String secondText = "2";
   String thirdText = "3";
@@ -72,15 +72,16 @@ class Constants {
   String profilePageTitle = "Profil";
   String profilePosts = "Paylaşımlar";
 
-  //Make Group
+  //Group
   String makeGroupPageTitle = "Grup oluştur";
+  String groups = "Gruplar";
+  String groupsTitle = "Grup ismi";
 
   //Add User
   String addUserPageTitle = "Kişi ekle";
   String addUserPageSearchUserId = "Kullanıcı adıyla bul";
   String addUserPageScanQR = "QR Okut";
-
-
+  String adduserSuccessfully = "Kullanıcı başarıyla eklendi.";
 
   //#####################################################################
   //ERROR MESSAGES
@@ -94,6 +95,4 @@ class Constants {
   //SUCCESS MESSAGES
   //
   String loginSuccessMessage = "Giriş başarılı.";
-
-
 }

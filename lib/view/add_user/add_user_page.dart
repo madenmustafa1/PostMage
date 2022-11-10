@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mdntls/model/profile/following_model.dart';
-import '../../model/profile/put_follower_data.dart';
+import '/services/data_layer.dart';
+import '/widgets/widget_util/show_toast.dart';
+import '/model/profile/following_model.dart';
+import '/model/profile/put_follower_data.dart';
 import '/model/profile/group_profile_info.dart';
 import '/provider/profile/profile_page_provider.dart';
 import '../profile/profile_viewmodel.dart';
@@ -112,10 +114,15 @@ class _AddUserPageState extends ConsumerState<AddUserPage> {
 
   void addUser(Object? userId) async {
     if (_userProfileModel == null || userId == null) return;
-    debugPrint(userId.toString());
     var model =
         PutFollowerDataModel(following: Following(userId: userId.toString()));
     var res = await _profileViewModel.putFollowerData(model);
-    debugPrint(res.data.toString());
+
+    if (res.status == DataStatus.SUCCESS) {
+      ShowToast.successToast(constants.adduserSuccessfully);
+      Navigator.maybePop(context, true);
+    } else {
+      ShowToast.errorToast(constants.TR_GENERAL_ERROR);
+    }
   }
 }

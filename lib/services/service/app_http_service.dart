@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:mdntls/model/profile/put_follower_data.dart';
+import '../../model/group/create_group_response.dart';
+import '/model/group/add_user_to_group_model.dart';
+import '/model/group/create_group_request_model.dart';
+import '/model/profile/put_follower_data.dart';
 import '/model/profile/group_profile_info.dart';
 import '/model/posts/add_post_model.dart';
 import '/util/app_user.dart';
@@ -181,6 +184,77 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: response.data,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool>> putAddUserToGroup(AddUserToGroupModel model) async {
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.GROUP + ServiceUrl.ADD_USER_TO_GROUP,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model,
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: response.data,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<CreateGroupResponseModel>> postCreateGroup(
+    CreateGroupRequestModel model,
+  ) async {
+    FormData formData = FormData.fromMap({
+      "fileName": await MultipartFile.fromFile(
+        model.file.path,
+        filename: DateTime.now().millisecondsSinceEpoch.toString() + ".png",
+      ),
+      "groupName": model.groupName
+    });
+
+    Response<dynamic> response = await dio.post(
+      ServiceUrl.BASE_URL + ServiceUrl.GROUP + ServiceUrl.CREATE_GROUP,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: formData,
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+        data: null,
+      );
+    }
+
+    return DataLayer(
+      data: CreateGroupResponseModel.fromJson(response.data),
       status: DataStatus.SUCCESS,
     );
   }

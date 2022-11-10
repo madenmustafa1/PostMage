@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../util/color_util.dart';
-import '../../util/constants.dart';
-import '../../dependency_injection/setup.dart';
-import '../../util/app_util.dart';
+import '/util/color_util.dart';
+import '/util/constants.dart';
+import '/dependency_injection/setup.dart';
+import '/util/app_util.dart';
 
 class RichTextField extends StatefulWidget {
   final TextEditingController controller;

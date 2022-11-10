@@ -18,6 +18,11 @@ class ServiceUrl {
   static const String ADD_POSTS = "/add-posts";
   static const String FOLLOWER_DATA = "/follower-data";
 
+  //Group
+  static const String GROUP = "group";
+  static const String CREATE_GROUP = "/create-group";
+  static const String ADD_USER_TO_GROUP = "/add-users-to-group";
+
   //Profile
   static const String PROFILE = "profile";
   static const String MY_PROFILE = "/my-profile";

@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
+import 'package:mdntls/view/group/create_group/create_group_page.dart';
 import '/view/add_user/add_user_page.dart';
 import '/view/profile/profile_page.dart';
 import '../view/qr_code/scan_qr_code_page.dart';
@@ -20,6 +21,7 @@ class CRouter {
   static String PROFILE = '/profile';
   static String ADD_USER = '/add_user';
   static String QR_CODE = '/qr_code';
+  static String CREATE_GROUP = '/create_group';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -69,6 +71,12 @@ class CRouter {
       case '/qr_code':
         return CupertinoPageRoute(
           builder: (_) => const ScanQRCodePage(),
+          settings: settings,
+        );
+
+      case "/create_group":
+        return CupertinoPageRoute(
+          builder: (_) => CreateGroupPage(),
           settings: settings,
         );
     }
