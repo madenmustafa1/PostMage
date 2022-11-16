@@ -80,13 +80,13 @@ class Groups {
     required this.creationTime,
     required this.groupUsers,
   });
-  late final String groupId;
-  late final String groupName;
-  late final String description;
-  late final String photoName;
+  late final String? groupId;
+  late final String? groupName;
+  late final String? description;
+  late final String? photoName;
   late final List<String?>? adminIds;
-  late final int creationTime;
-  late final List<GroupUsers> groupUsers;
+  late final int? creationTime;
+  late final List<GroupUsers?>? groupUsers;
 
   Groups.fromJson(Map<String, dynamic>? json) {
     if (json == null) return;
@@ -97,7 +97,7 @@ class Groups {
     if (json['adminIds'] != null) {
       var res = List.castFrom<dynamic, dynamic>(json['adminIds']);
       if (res.isNotEmpty) {
-        adminIds = List.castFrom<String?, String?>(json['adminIds']);
+        adminIds = List.castFrom<dynamic, String?>(json['adminIds']);
       }
     }
     creationTime = json['creationTime'];

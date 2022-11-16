@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mdntls/model/group/get_group_post_request_model.dart';
 import '../../model/group/create_group_response.dart';
 import '/model/group/add_user_to_group_model.dart';
 import '/model/group/create_group_request_model.dart';
@@ -255,6 +256,39 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: CreateGroupResponseModel.fromJson(response.data),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
+      GetGroupPostRequestModel model) async {
+    Response<dynamic> response = await dio.post(
+      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.GROUP_POSTS,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model.toMap(),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+       data: (response.data as List)
+          .map((x) => GetUserPostModel.fromJson(x))
+          .toList(),
       status: DataStatus.SUCCESS,
     );
   }

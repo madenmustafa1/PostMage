@@ -1,3 +1,4 @@
+import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_response.dart';
 import '/model/group/create_group_request_model.dart';
 import '/model/group/add_user_to_group_model.dart';
@@ -56,5 +57,11 @@ class AppHttpRepository implements AppHttpInterface {
   Future<DataLayer<CreateGroupResponseModel>> postCreateGroup(
       CreateGroupRequestModel model) async {
     return await _appHttpService.postCreateGroup(model);
+  }
+
+  @override
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
+      GetGroupPostRequestModel model) async {
+    return await _appHttpService.getGroupPost(model);
   }
 }

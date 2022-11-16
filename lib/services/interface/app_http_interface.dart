@@ -1,7 +1,8 @@
-import 'package:mdntls/model/group/add_user_to_group_model.dart';
+import '/model/group/add_user_to_group_model.dart';
 
-import '../../model/group/create_group_request_model.dart';
-import '../../model/group/create_group_response.dart';
+import '/model/group/create_group_request_model.dart';
+import '/model/group/create_group_response.dart';
+import '/model/group/get_group_post_request_model.dart';
 import '/model/profile/group_profile_info.dart';
 import '/model/profile/put_follower_data.dart';
 import '/model/posts/add_post_model.dart';
@@ -28,4 +29,6 @@ abstract class AppHttpInterface {
   );
 
   Future<DataLayer<bool>> putAddUserToGroup(AddUserToGroupModel model);
+
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(GetGroupPostRequestModel model);
 }

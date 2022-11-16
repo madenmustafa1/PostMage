@@ -1,40 +1,38 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/provider/profile/profile_page_provider.dart';
-import '/widgets/list/list_item/like_size_text.dart';
-import '/enum/list_type.dart';
-import '/model/posts/get_user_post_model.dart';
-import '/provider/home/home_page_provider.dart';
-import '/view/home/home_view_model.dart';
+import '../../model/profile/group_profile_info.dart';
+import '../../provider/profile/profile_page_provider.dart';
+import '../../view/profile/profile_viewmodel.dart';
+import '/view/group/group_viewmodel.dart';
+import '/provider/group/get_group_post_provider.dart';
 import '/widgets/list/post_bottom_row.dart';
-import '/widgets/image/show_list_image.dart';
-import '/widgets/widget_util/box_decorations.dart';
 import '/dependency_injection/setup.dart';
+import '/model/posts/get_user_post_model.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
 import '/util/constants.dart';
+import '../image/show_list_image.dart';
+import '../text_and_button/simple_text.dart';
 import '../widget_util/box_decoration.dart';
+import '../widget_util/box_decorations.dart';
 import '../widget_util/calc_sized_box.dart';
-import '/widgets/text_and_button/simple_text.dart';
+import 'list_item/like_size_text.dart';
 import 'list_item/user_image_description.dart';
 
-class UserPostListWidget extends ConsumerWidget {
-  UserPostListWidget({
+class GroupPostListWidget extends ConsumerWidget {
+  GroupPostListWidget({
     Key? key,
-    required this.listType,
   }) : super(key: key);
 
-  ListType listType;
-
   final Constants constants = getIt<Constants>();
-  final HomeViewModel _homeViewModel = getIt<HomeViewModel>();
+  final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
   List<GetUserPostModel?>? followedUsersPostModel;
+  UserProfileInfoModel? _userProfileModel;
+  final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    observeData(ref);
+    getMyProfileInfo(ref);
     return Column(
       children: [
         SizedBox(
@@ -100,31 +98,26 @@ class UserPostListWidget extends ConsumerWidget {
     );
   }
 
-  void observeData(WidgetRef ref) async {
-    if (listType == ListType.HOME) {
-      observeDataFollowedUsers(ref);
-    } else {
-      observeMyPost(ref);
+  void getMyProfileInfo(WidgetRef ref) async {
+    _userProfileModel = ref.watch(getProfileInfoProvider);
+    var model = await _profileViewModel.getMyProfileInfo();
+
+    if (_userProfileModel != null) {
+      _userProfileModel = model.data;
+      ref.read(getProfileInfoProvider.notifier).update(model.data);
+      observeGroupPost(ref);
+    } else if ( model.data != null && _userProfileModel == null) {
+      observeGroupPost(ref);
     }
   }
 
-  void observeDataFollowedUsers(WidgetRef ref) async {
-    followedUsersPostModel = ref.watch(getFollowedUsersPostsProvider);
-    var model = await _homeViewModel.getUsersPosts(listType: listType);
+  void observeGroupPost(WidgetRef ref) async {
+    followedUsersPostModel = ref.watch(getGroupPostsProvider);
+    var model = await _groupViewModel.getGroupPost(_userProfileModel!);
 
-    var usersPostsProvider = ref.read(getFollowedUsersPostsProvider);
-    if (model != null && usersPostsProvider == null) {
-      ref.read(getFollowedUsersPostsProvider.notifier).update(model);
-    }
-  }
-
-  void observeMyPost(WidgetRef ref) async {
-    followedUsersPostModel = ref.watch(getMyPostProvider);
-    var model = await _homeViewModel.getUsersPosts(listType: listType);
-
-    var usersPostsProvider = ref.read(getMyPostProvider);
-    if (model != null && usersPostsProvider == null) {
-      ref.read(getMyPostProvider.notifier).update(model);
+    var usersPostsProvider = ref.read(getGroupPostsProvider);
+    if (model.data != null && usersPostsProvider == null) {
+      ref.read(getGroupPostsProvider.notifier).update(model.data!);
     }
   }
 }

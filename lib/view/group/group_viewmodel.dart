@@ -1,6 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:mdntls/model/group/get_group_post_request_model.dart';
 import '../../model/group/create_group_request_model.dart';
 import '../../model/group/create_group_response.dart';
+import '../../model/posts/get_user_post_model.dart';
+import '../../model/profile/group_profile_info.dart';
 import '../../services/data_layer.dart';
 import '/model/group/add_user_to_group_model.dart';
 import '/services/repo/app_http_repository.dart';
@@ -36,5 +41,19 @@ class GroupViewModel {
     );
     var result = await _appHttpRepository.putAddUserToGroup(model);
     debugPrint(result.data.toString());
+  }
+
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
+    UserProfileInfoModel _userProfileModel,
+  ) async {
+    List<String> list = [];
+    _userProfileModel.groups?.forEach((element) {
+      if(element?.groupId != null) {
+       list.add(element!.groupId!);
+      }
+    });
+
+    return await _appHttpRepository
+        .getGroupPost(GetGroupPostRequestModel(groupId: list));
   }
 }

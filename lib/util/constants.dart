@@ -75,7 +75,9 @@ class Constants {
   //Group
   String makeGroupPageTitle = "Grup oluştur";
   String groups = "Gruplar";
+  String groupsPostTitle = "Gruplarda paylaşılanlar";
   String groupsTitle = "Grup ismi";
+  String createCroupSuccess = "Grup oluşturuldu.";
 
   //Add User
   String addUserPageTitle = "Kişi ekle";

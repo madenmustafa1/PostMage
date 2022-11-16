@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-
-
 class AddUserToGroupPage extends StatelessWidget {
   AddUserToGroupPage({
     Key? key,

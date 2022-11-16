@@ -55,7 +55,7 @@ Widget customDrawerMenu(BuildContext context) {
           title: Text(constants.makeGroupPageTitle),
           onTap: () {
             Navigator.pop(context);
-            Navigator.pushNamed(context, CRouter.CREATE_GROUP);
+            Navigator.pushNamed(context, CRouter.ALL_GROUPS_POST);
           },
         ),
         const Padding(

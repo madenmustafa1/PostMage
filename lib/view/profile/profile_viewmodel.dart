@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../model/profile/put_follower_data.dart';
 import '/model/profile/group_profile_info.dart';
 import '/services/data_layer.dart';
@@ -14,6 +16,7 @@ class ProfileViewModel {
       var data = await _appHttpRepository.getMyProfileInfo();
       return data;
     } catch (e) {
+      debugPrint(e.toString());
       return DataLayer(
         errorData: ErrorData(
           reason: constants.TR_GENERAL_ERROR,

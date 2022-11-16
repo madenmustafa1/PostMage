@@ -17,6 +17,7 @@ class ServiceUrl {
   static const String FOLLOWED_USERS_POSTS = "/followed-users-posts";
   static const String ADD_POSTS = "/add-posts";
   static const String FOLLOWER_DATA = "/follower-data";
+  static const String GROUP_POSTS = "/group-posts";
 
   //Group
   static const String GROUP = "group";

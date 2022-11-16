@@ -99,7 +99,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
     var result = await _groupViewModel.createGroup(content.text, pickedFile);
 
     if (result.status == DataStatus.SUCCESS) {
-      ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);
+      ShowToast.successToast(constants.createCroupSuccess);
       Navigator.maybePop(context, true);
     } else {
       var message = result.errorData?.reason ?? "";
