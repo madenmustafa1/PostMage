@@ -1,12 +1,10 @@
-import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
-import 'package:mdntls/model/group/get_group_post_request_model.dart';
-import '../../model/group/create_group_request_model.dart';
-import '../../model/group/create_group_response.dart';
-import '../../model/posts/get_user_post_model.dart';
-import '../../model/profile/group_profile_info.dart';
-import '../../services/data_layer.dart';
+import '/model/group/get_group_post_request_model.dart';
+import '/model/group/create_group_request_model.dart';
+import '/model/group/create_group_response.dart';
+import '/model/posts/get_user_post_model.dart';
+import '/model/profile/group_profile_info.dart';
+import '/services/data_layer.dart';
 import '/model/group/add_user_to_group_model.dart';
 import '/services/repo/app_http_repository.dart';
 import '/util/app_user.dart';

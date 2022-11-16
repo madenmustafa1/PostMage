@@ -155,7 +155,6 @@ class AppHttpService implements AppHttpInterface {
 
   @override
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model) async {
-    // TODO: implement putMyProfileInfo
     throw UnimplementedError();
   }
 

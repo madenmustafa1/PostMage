@@ -1,8 +1,10 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../model/profile/group_profile_info.dart';
-import '../../provider/profile/profile_page_provider.dart';
-import '../../view/profile/profile_viewmodel.dart';
+import '/model/profile/group_profile_info.dart';
+import '/provider/profile/profile_page_provider.dart';
+import '/view/profile/profile_viewmodel.dart';
 import '/view/group/group_viewmodel.dart';
 import '/provider/group/get_group_post_provider.dart';
 import '/widgets/list/post_bottom_row.dart';
@@ -102,11 +104,12 @@ class GroupPostListWidget extends ConsumerWidget {
     _userProfileModel = ref.watch(getProfileInfoProvider);
     var model = await _profileViewModel.getMyProfileInfo();
 
-    if (_userProfileModel != null) {
+    if (model.data != null && _userProfileModel == null) {
       _userProfileModel = model.data;
       ref.read(getProfileInfoProvider.notifier).update(model.data);
+
       observeGroupPost(ref);
-    } else if ( model.data != null && _userProfileModel == null) {
+    } else if (_userProfileModel != null) {
       observeGroupPost(ref);
     }
   }
@@ -115,9 +118,10 @@ class GroupPostListWidget extends ConsumerWidget {
     followedUsersPostModel = ref.watch(getGroupPostsProvider);
     var model = await _groupViewModel.getGroupPost(_userProfileModel!);
 
-    var usersPostsProvider = ref.read(getGroupPostsProvider);
-    if (model.data != null && usersPostsProvider == null) {
+    //var usersPostsProvider = ref.read(getGroupPostsProvider);
+    if (model.data != null) {
       ref.read(getGroupPostsProvider.notifier).update(model.data!);
     }
   }
+  
 }
