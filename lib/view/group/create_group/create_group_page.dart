@@ -36,7 +36,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BasicAppBar(
-        title: constants.groups,
+        title: constants.groupsTitle,
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -53,7 +53,7 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
               const CalcSizedBox(calc: 40),
               RichTextField(
                 controller: content,
-                hintText: constants.groupsTitle,
+                hintText: constants.groupName,
                 maxlines: 3,
               ),
               const CalcSizedBox(calc: 100),
@@ -65,9 +65,6 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                   saveButton();
                 },
               ),
-
-              //ListView
-              //HomePagePastOrderList()
             ],
           ),
         ),

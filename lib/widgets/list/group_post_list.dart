@@ -102,6 +102,7 @@ class GroupPostListWidget extends ConsumerWidget {
 
   void getMyProfileInfo(WidgetRef ref) async {
     _userProfileModel = ref.watch(getProfileInfoProvider);
+    followedUsersPostModel = ref.watch(getGroupPostsProvider);
     var model = await _profileViewModel.getMyProfileInfo();
 
     if (model.data != null && _userProfileModel == null) {
@@ -115,13 +116,11 @@ class GroupPostListWidget extends ConsumerWidget {
   }
 
   void observeGroupPost(WidgetRef ref) async {
-    followedUsersPostModel = ref.watch(getGroupPostsProvider);
     var model = await _groupViewModel.getGroupPost(_userProfileModel!);
 
-    //var usersPostsProvider = ref.read(getGroupPostsProvider);
-    if (model.data != null) {
+    var getGroupPosts = ref.read(getGroupPostsProvider);
+    if (model.data != null && getGroupPosts == null) {
       ref.read(getGroupPostsProvider.notifier).update(model.data!);
     }
   }
-  
 }

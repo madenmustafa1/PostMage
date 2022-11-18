@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../../model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_request_model.dart';
 import '/model/group/create_group_response.dart';
@@ -32,6 +33,20 @@ class GroupViewModel {
         .postCreateGroup(CreateGroupRequestModel(file: file, groupName: text));
   }
 
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
+    UserProfileInfoModel _userProfileModel,
+  ) async {
+    List<String> list = [];
+    _userProfileModel.groups?.forEach((element) {
+      if (element?.groupId != null) {
+        list.add(element!.groupId!);
+      }
+    });
+
+    return await _appHttpRepository
+        .getGroupPost(GetGroupPostRequestModel(groupId: list));
+  }
+
   void addUserToGroup() async {
     var model = AddUserToGroupModel(
       id: AppUser.LOGIN_TOKEN_MODEL!.userId!,
@@ -41,17 +56,17 @@ class GroupViewModel {
     debugPrint(result.data.toString());
   }
 
-  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
-    UserProfileInfoModel _userProfileModel,
-  ) async {
-    List<String> list = [];
-    _userProfileModel.groups?.forEach((element) {
-      if(element?.groupId != null) {
-       list.add(element!.groupId!);
-      }
-    });
-
-    return await _appHttpRepository
-        .getGroupPost(GetGroupPostRequestModel(groupId: list));
+  Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList() async {
+    try {
+      return await _appHttpRepository.getMyGroupList();
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: "Hata oluştu.",
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
   }
 }

@@ -1,3 +1,4 @@
+import '/model/group/get_my_group_list_model.dart';
 import '/model/group/add_user_to_group_model.dart';
 
 import '/model/group/create_group_request_model.dart';
@@ -31,4 +32,6 @@ abstract class AppHttpInterface {
   Future<DataLayer<bool>> putAddUserToGroup(AddUserToGroupModel model);
 
   Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(GetGroupPostRequestModel model);
+
+  Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList();
 }

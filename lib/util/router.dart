@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:mdntls/view/group/all_groups_post/all_groups_post_page.dart';
 import 'package:mdntls/view/group/create_group/create_group_page.dart';
+import 'package:mdntls/view/group/group_list/group_list_page.dart';
 import '/view/add_user/add_user_page.dart';
 import '/view/profile/profile_page.dart';
 import '../view/qr_code/scan_qr_code_page.dart';
@@ -24,6 +25,7 @@ class CRouter {
   static String QR_CODE = '/qr_code';
   static String ALL_GROUPS_POST = '/all_groups_post';
   static String CREATE_GROUP = '/create_group';
+  static String GROUP_LIST = '/group_list';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -85,6 +87,12 @@ class CRouter {
       case "/create_group":
         return CupertinoPageRoute(
           builder: (_) => CreateGroupPage(),
+          settings: settings,
+        );
+
+      case "/group_list":
+        return CupertinoPageRoute(
+          builder: (_) => const GroupListPage(),
           settings: settings,
         );
     }

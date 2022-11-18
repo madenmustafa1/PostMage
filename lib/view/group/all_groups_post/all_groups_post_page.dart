@@ -41,7 +41,7 @@ class AllGroupsPostPage extends StatelessWidget {
         children: [
           FloatingActionButton(
             heroTag: "tag-1",
-            onPressed: () => Navigator.pushNamed(context, CRouter.CREATE_GROUP),
+            onPressed: () => Navigator.pushNamed(context, CRouter.GROUP_LIST),
             child: const Icon(Icons.groups),
           ),
           const CalcSizedBox(calc: 100),
