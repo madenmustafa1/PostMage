@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
+import 'package:mdntls/util/constants.dart';
 import '../../model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_request_model.dart';
@@ -16,6 +19,7 @@ import 'package:image_picker/image_picker.dart';
 
 class GroupViewModel {
   final AppHttpRepository _appHttpRepository = getIt<AppHttpRepository>();
+  final Constants _constants = getIt<Constants>();
 
   Future<DataLayer<CreateGroupResponseModel?>> createGroup(
       String text, XFile? pickedFile) async {
@@ -62,11 +66,31 @@ class GroupViewModel {
     } catch (e) {
       return DataLayer(
         errorData: ErrorData(
-          reason: "Hata oluştu.",
+          reason: _constants.TR_GENERAL_ERROR,
           statusCode: DataStatus.ERROR,
         ),
         status: DataStatus.ERROR,
       );
     }
+  }
+
+  Future<DataLayer<Bool?>> removeUser() async {
+    return DataLayer(
+      errorData: ErrorData(
+        reason: _constants.TR_GENERAL_ERROR,
+        statusCode: DataStatus.ERROR,
+      ),
+      status: DataStatus.ERROR,
+    );
+  }
+
+  Future<DataLayer<Bool?>> makeUserAdmin() async {
+    return DataLayer(
+      errorData: ErrorData(
+        reason: _constants.TR_GENERAL_ERROR,
+        statusCode: DataStatus.ERROR,
+      ),
+      status: DataStatus.ERROR,
+    );
   }
 }
