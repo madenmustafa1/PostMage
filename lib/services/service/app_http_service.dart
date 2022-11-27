@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import '/model/group/get_my_group_list_info.dart';
+import '/model/group/remove_user_group_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/create_group_response.dart';
@@ -320,6 +322,71 @@ class AppHttpService implements AppHttpInterface {
       data: (response.data as List)
           .map((x) => GetMyGroupListModel.fromJson(x))
           .toList(),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(
+      String groupId) async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.GROUP + ServiceUrl.MY_GROUP_LIST_INFO,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      queryParameters: {
+        "groupId": groupId,
+      },
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: (response.data as List)
+          .map((x) => MyGroupListInfo.fromJson(x))
+          .toList(),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model) async {
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.GROUP + ServiceUrl.REMOVE_USERS_TO_GROUP,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model.toJson(),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: response.data,
       status: DataStatus.SUCCESS,
     );
   }

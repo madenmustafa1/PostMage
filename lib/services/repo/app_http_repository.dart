@@ -1,3 +1,5 @@
+import '../../model/group/remove_user_group_model.dart';
+import '/model/group/get_my_group_list_info.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_response.dart';
@@ -69,5 +71,16 @@ class AppHttpRepository implements AppHttpInterface {
   @override
   Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList() async {
     return await _appHttpService.getMyGroupList();
+  }
+
+  @override
+  Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(
+      String groupId) async {
+    return await _appHttpService.getMyGroupListInfo(groupId);
+  }
+
+  @override
+  Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model) async {
+    return await _appHttpService.putRemoveUserToGroup(model);
   }
 }

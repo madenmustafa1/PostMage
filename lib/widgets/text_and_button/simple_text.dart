@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../util/app_util.dart';
-import '../../util/color_util.dart';
+import '/util/app_util.dart';
+import '/util/color_util.dart';
 
 // ignore: must_be_immutable
 class SimpleText extends StatelessWidget {
@@ -11,13 +11,13 @@ class SimpleText extends StatelessWidget {
   final Color? textColor;
   final bool? textIsNormal;
 
-  SimpleText(
-      {Key? key,
-      required this.text,
-      this.optionalTextSize,
-      this.textColor,
-      this.textIsNormal})
-      : super(key: key);
+  SimpleText({
+    Key? key,
+    required this.text,
+    this.optionalTextSize,
+    this.textColor,
+    this.textIsNormal,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,8 @@
 import 'dart:ffi';
-
 import 'package:flutter/cupertino.dart';
 import 'package:mdntls/util/constants.dart';
-import '../../model/group/get_my_group_list_model.dart';
+import '../../model/group/get_my_group_list_info.dart';
+import '/model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_request_model.dart';
 import '/model/group/create_group_response.dart';
@@ -16,6 +16,8 @@ import '/dependency_injection/setup.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+
+import '../../model/group/remove_user_group_model.dart';
 
 class GroupViewModel {
   final AppHttpRepository _appHttpRepository = getIt<AppHttpRepository>();
@@ -74,7 +76,7 @@ class GroupViewModel {
     }
   }
 
-  Future<DataLayer<Bool?>> removeUser() async {
+  Future<DataLayer<Bool?>> makeUserAdmin() async {
     return DataLayer(
       errorData: ErrorData(
         reason: _constants.TR_GENERAL_ERROR,
@@ -84,13 +86,33 @@ class GroupViewModel {
     );
   }
 
-  Future<DataLayer<Bool?>> makeUserAdmin() async {
-    return DataLayer(
-      errorData: ErrorData(
-        reason: _constants.TR_GENERAL_ERROR,
-        statusCode: DataStatus.ERROR,
-      ),
-      status: DataStatus.ERROR,
-    );
+  Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(
+    String groupId,
+  ) async {
+    try {
+      return await _appHttpRepository.getMyGroupListInfo(groupId);
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: _constants.TR_GENERAL_ERROR,
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
+  }
+
+  Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model) async {
+    try {
+      return await _appHttpRepository.putRemoveUserToGroup(model);
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: _constants.TR_GENERAL_ERROR,
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
   }
 }

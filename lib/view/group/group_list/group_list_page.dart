@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/view/group/group_list/get_group_info_modal.dart';
+import '/util/app_util.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
 import '/provider/group/get_my_group_list_provider.dart';
 import '/services/data_layer.dart';
@@ -20,9 +22,10 @@ class GroupListPage extends ConsumerStatefulWidget {
 }
 
 class _GroupListPageState extends ConsumerState<GroupListPage> {
-  Constants constants = getIt<Constants>();
+  final Constants _constants = getIt<Constants>();
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
-  List<GetMyGroupListModel?>? groupList;
+  List<GetMyGroupListModel?>? _groupList;
+  final GetGroupInfoModal _getGroupInfoModal = GetGroupInfoModal();
 
   @override
   void initState() {
@@ -32,28 +35,31 @@ class _GroupListPageState extends ConsumerState<GroupListPage> {
 
   @override
   Widget build(BuildContext context) {
-    groupList = ref.watch(getMyGroupListProvider);
+    _groupList = ref.watch(getMyGroupListProvider);
     return Scaffold(
-      appBar: BasicAppBar(title: constants.groups),
+      appBar: BasicAppBar(title: _constants.groups),
       body: Column(
         children: [
-          groupList != null
+          _groupList != null
               ? Expanded(
                   child: ListView.builder(
-                    itemCount: groupList?.length,
+                    itemCount: _groupList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         trailing: GestureDetector(
-                          onTap: () => showModalBottomSheets(),
+                          onTap: () => _getGroupInfoModal.showModalBottomSheets(
+                            context,
+                            _groupList![index],
+                          ),
                           child: const Icon(Icons.settings),
                         ),
                         leading: CustomizeImageWidget(
-                          photoName: groupList?[index]?.photoName ?? "",
+                          photoName: _groupList?[index]?.photoName ?? "",
                           width: 50,
                           height: 50,
                         ),
                         title: SimpleText(
-                          text: groupList?[index]?.groupName ?? "",
+                          text: _groupList?[index]?.groupName ?? "",
                           textIsNormal: true,
                           optionalTextSize: 20,
                         ),
@@ -74,21 +80,27 @@ class _GroupListPageState extends ConsumerState<GroupListPage> {
       ref.read(getMyGroupListProvider.notifier).update(result.data);
     } else {
       ShowToast.errorToast(
-        result.errorData?.reason ?? constants.TR_GENERAL_ERROR,
+        result.errorData?.reason ?? _constants.TR_GENERAL_ERROR,
       );
     }
   }
 
-  void showModalBottomSheets() async {
+  void showModalBottomSheets(GetMyGroupListModel model) async {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
         return Column(
           children: [
             const CalcSizedBox(calc: 100),
+            SimpleText(
+              text: model.groupName ?? "",
+              optionalTextSize: AppUtil.getHeight(context) / 20,
+              textIsNormal: true,
+            ),
+            const CalcSizedBox(calc: 100),
             Expanded(
               child: ListView.builder(
-                itemCount: groupList?.length,
+                itemCount: _groupList?.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     trailing: SizedBox(
@@ -108,12 +120,12 @@ class _GroupListPageState extends ConsumerState<GroupListPage> {
                       ),
                     ),
                     leading: CustomizeImageWidget(
-                      photoName: groupList?[index]?.photoName ?? "",
+                      photoName: _groupList?[index]?.photoName ?? "",
                       width: 50,
                       height: 50,
                     ),
                     title: SimpleText(
-                      text: groupList?[index]?.groupName ?? "",
+                      text: _groupList?[index]?.groupName ?? "",
                       textIsNormal: true,
                       optionalTextSize: 20,
                     ),

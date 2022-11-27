@@ -1,3 +1,6 @@
+import 'package:mdntls/model/group/remove_user_group_model.dart';
+
+import '/model/group/get_my_group_list_info.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/add_user_to_group_model.dart';
 
@@ -31,7 +34,12 @@ abstract class AppHttpInterface {
 
   Future<DataLayer<bool>> putAddUserToGroup(AddUserToGroupModel model);
 
-  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(GetGroupPostRequestModel model);
+  Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
+      GetGroupPostRequestModel model);
 
   Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList();
+
+  Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(String groupId);
+
+  Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model);
 }
