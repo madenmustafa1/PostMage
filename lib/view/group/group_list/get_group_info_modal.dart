@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mdntls/model/group/remove_user_group_model.dart';
-import 'package:mdntls/services/data_layer.dart';
-import 'package:mdntls/widgets/appbar/drawer_menu.dart';
-import 'package:mdntls/widgets/widget_util/show_toast.dart';
+import '/model/group/remove_user_group_model.dart';
+import '/services/data_layer.dart';
+import '/util/color_util.dart';
+import '/widgets/appbar/drawer_menu.dart';
+import '/widgets/widget_util/show_toast.dart';
 
-import '../../../util/constants.dart';
+import '/util/constants.dart';
 import '/dependency_injection/setup.dart';
 import '../group_viewmodel.dart';
 import '/model/group/get_my_group_list_model.dart';
@@ -42,11 +43,25 @@ class GetGroupInfoModal {
           children: [
             const CalcSizedBox(calc: 100),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              child: SimpleText(
-                text: model.groupName ?? "",
-                optionalTextSize: AppUtil.getHeight(context) / 20,
-                textIsNormal: true,
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SimpleText(
+                    text: model.groupName ?? "",
+                    optionalTextSize: AppUtil.getHeight(context) / 50,
+                    textIsNormal: true,
+                  ),
+                  ElevatedButton(
+                    child: SimpleText(
+                      text: constants.addUserToGroup,
+                      textIsNormal: true,
+                      optionalTextSize: AppUtil.getHeight(context) / 50,
+                      textColor: ColorUtil.WHITE,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
               ),
             ),
             const CalcSizedBox(calc: 100),
@@ -111,5 +126,17 @@ class GetGroupInfoModal {
 
   void makeUserAdmin(BuildContext context) async {
     Navigator.pop(context);
+  }
+
+  void getFollowerData(BuildContext context) async {
+    var result = await _groupViewModel.getFollowerData();
+
+    if (result.status == DataStatus.SUCCESS) {
+      ShowToast.successToast(constants.deleteUserToGroupSuccess);
+    } else {
+      ShowToast.errorToast(
+        result.errorData?.reason ?? constants.TR_GENERAL_ERROR,
+      );
+    }
   }
 }

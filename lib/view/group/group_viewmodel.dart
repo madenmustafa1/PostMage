@@ -2,6 +2,8 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:mdntls/util/constants.dart';
 import '../../model/group/get_my_group_list_info.dart';
+import '../../model/profile/get_follower_data.dart';
+import '../../model/profile/put_follower_data.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_request_model.dart';
@@ -53,15 +55,6 @@ class GroupViewModel {
         .getGroupPost(GetGroupPostRequestModel(groupId: list));
   }
 
-  void addUserToGroup() async {
-    var model = AddUserToGroupModel(
-      id: AppUser.LOGIN_TOKEN_MODEL!.userId!,
-      groupId: "6351a835d35d134785c6720f",
-    );
-    var result = await _appHttpRepository.putAddUserToGroup(model);
-    debugPrint(result.data.toString());
-  }
-
   Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList() async {
     try {
       return await _appHttpRepository.getMyGroupList();
@@ -102,9 +95,56 @@ class GroupViewModel {
     }
   }
 
+  Future<DataLayer<bool>> addUserToGroup() async {
+    var model = AddUserToGroupModel(
+      id: AppUser.LOGIN_TOKEN_MODEL!.userId!,
+      groupId: "6351a835d35d134785c6720f",
+    );
+
+    try {
+      return await _appHttpRepository.putAddUserToGroup(model);
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: _constants.TR_GENERAL_ERROR,
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
+  }
+
   Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model) async {
     try {
       return await _appHttpRepository.putRemoveUserToGroup(model);
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: _constants.TR_GENERAL_ERROR,
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
+  }
+
+  Future<DataLayer<GetFollowerDataModel?>> getFollowerData() async {
+    try {
+      return await _appHttpRepository.getFollowerData();
+    } catch (e) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: _constants.TR_GENERAL_ERROR,
+          statusCode: DataStatus.ERROR,
+        ),
+        status: DataStatus.ERROR,
+      );
+    }
+  }
+
+  Future<DataLayer<bool?>> putAddAdminToGroup(UserGroupModel model) async {
+    try {
+      return await _appHttpRepository.putAddAdminToGroup(model);
     } catch (e) {
       return DataLayer(
         errorData: ErrorData(

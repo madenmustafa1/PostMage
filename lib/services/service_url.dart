@@ -19,6 +19,7 @@ class ServiceUrl {
   static const String FOLLOWER_DATA = "/follower-data";
   static const String GROUP_POSTS = "/group-posts";
   static const String REMOVE_USERS_TO_GROUP = "/remove-users-to-group";
+  static const String ADD_ADMIN_TO_GROUP = "/add-admin-to-group";
 
   //Group
   static const String GROUP = "group";
@@ -31,6 +32,7 @@ class ServiceUrl {
   //Profile
   static const String PROFILE = "profile";
   static const String MY_PROFILE = "/my-profile";
+  static const String MY_FOLLOWER_DATA = "/follower-data";
 
   static const SUCCESS = 200;
 }

@@ -1,9 +1,9 @@
-import 'package:mdntls/model/group/remove_user_group_model.dart';
+import 'package:mdntls/model/profile/get_follower_data.dart';
 
+import '/model/group/remove_user_group_model.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/add_user_to_group_model.dart';
-
 import '/model/group/create_group_request_model.dart';
 import '/model/group/create_group_response.dart';
 import '/model/group/get_group_post_request_model.dart';
@@ -26,6 +26,8 @@ abstract class AppHttpInterface {
 
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model);
 
+  Future<DataLayer<GetFollowerDataModel?>> getFollowerData();
+
   Future<DataLayer<bool>> putFollowerData(PutFollowerDataModel model);
 
   Future<DataLayer<CreateGroupResponseModel>> postCreateGroup(
@@ -42,4 +44,6 @@ abstract class AppHttpInterface {
   Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(String groupId);
 
   Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model);
+
+  Future<DataLayer<bool?>> putAddAdminToGroup(UserGroupModel model);
 }

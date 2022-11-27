@@ -80,6 +80,8 @@ class Constants {
   String groupName = "Grup adı";
   String createCroupSuccess = "Grup oluşturuldu.";
   String deleteUserToGroupSuccess = "Kullanıcı silindi.";
+  String adminToGroupSuccess = "Kullanıcı yönetici oldu.";
+  String addUserToGroup = "Kullanıcı ekle";
 
   //Add User
   String addUserPageTitle = "Kişi ekle";

@@ -1,4 +1,5 @@
 import '../../model/group/remove_user_group_model.dart';
+import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
@@ -75,12 +76,23 @@ class AppHttpRepository implements AppHttpInterface {
 
   @override
   Future<DataLayer<List<MyGroupListInfo?>?>> getMyGroupListInfo(
-      String groupId) async {
+    String groupId,
+  ) async {
     return await _appHttpService.getMyGroupListInfo(groupId);
   }
 
   @override
   Future<DataLayer<bool?>> putRemoveUserToGroup(UserGroupModel model) async {
     return await _appHttpService.putRemoveUserToGroup(model);
+  }
+
+  @override
+  Future<DataLayer<GetFollowerDataModel?>> getFollowerData() async {
+    return await _appHttpService.getFollowerData();
+  }
+
+  @override
+  Future<DataLayer<bool?>> putAddAdminToGroup(UserGroupModel model) async {
+    return await _appHttpService.putAddAdminToGroup(model);
   }
 }

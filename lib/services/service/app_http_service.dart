@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/remove_user_group_model.dart';
 import '/model/group/get_group_post_request_model.dart';
@@ -387,6 +388,65 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: response.data,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool?>> putAddAdminToGroup(UserGroupModel model) async {
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.GROUP + ServiceUrl.ADD_ADMIN_TO_GROUP,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model.toJson(),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: response.data,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<GetFollowerDataModel?>> getFollowerData() async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.PROFILE + ServiceUrl.MY_FOLLOWER_DATA,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: GetFollowerDataModel.fromJson(response.data),
       status: DataStatus.SUCCESS,
     );
   }
