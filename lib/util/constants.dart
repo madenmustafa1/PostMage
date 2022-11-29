@@ -82,6 +82,8 @@ class Constants {
   String deleteUserToGroupSuccess = "Kullanıcı silindi.";
   String adminToGroupSuccess = "Kullanıcı yönetici oldu.";
   String addUserToGroup = "Kullanıcı ekle";
+  String addUserToGroupSuccess = "Kullanıcı eklendi";
+  String addUserToGroupFail = "Kullanıcı eklendi";
 
   //Add User
   String addUserPageTitle = "Kişi ekle";

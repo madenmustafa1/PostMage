@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mdntls/view/group/group_list/get_group_info_modal.dart';
+import '/util/router.dart';
 import '/util/app_util.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
 import '/provider/group/get_my_group_list_provider.dart';
@@ -25,7 +25,6 @@ class _GroupListPageState extends ConsumerState<GroupListPage> {
   final Constants _constants = getIt<Constants>();
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
   List<GetMyGroupListModel?>? _groupList;
-  final GetGroupInfoModal _getGroupInfoModal = GetGroupInfoModal();
 
   @override
   void initState() {
@@ -47,9 +46,10 @@ class _GroupListPageState extends ConsumerState<GroupListPage> {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                         trailing: GestureDetector(
-                          onTap: () => _getGroupInfoModal.showModalBottomSheets(
+                          onTap: () => Navigator.pushNamed(
                             context,
-                            _groupList![index],
+                            CRouter.GROUP_INFO,
+                            arguments: _groupList![index],
                           ),
                           child: const Icon(Icons.settings),
                         ),

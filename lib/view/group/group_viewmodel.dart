@@ -95,12 +95,7 @@ class GroupViewModel {
     }
   }
 
-  Future<DataLayer<bool>> addUserToGroup() async {
-    var model = AddUserToGroupModel(
-      id: AppUser.LOGIN_TOKEN_MODEL!.userId!,
-      groupId: "6351a835d35d134785c6720f",
-    );
-
+  Future<DataLayer<bool>> addUserToGroup(AddUserToGroupModel model,) async {
     try {
       return await _appHttpRepository.putAddUserToGroup(model);
     } catch (e) {

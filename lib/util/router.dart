@@ -1,9 +1,12 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/cupertino.dart';
-import 'package:mdntls/view/group/all_groups_post/all_groups_post_page.dart';
-import 'package:mdntls/view/group/create_group/create_group_page.dart';
-import 'package:mdntls/view/group/group_list/group_list_page.dart';
+import 'package:flutter/material.dart';
+import '../model/group/get_my_group_list_model.dart';
+import '/view/group/all_groups_post/all_groups_post_page.dart';
+import '/view/group/create_group/create_group_page.dart';
+import '/view/group/group_info/group_info_page.dart';
+import '/view/group/group_list/group_list_page.dart';
 import '/view/add_user/add_user_page.dart';
 import '/view/profile/profile_page.dart';
 import '../view/qr_code/scan_qr_code_page.dart';
@@ -26,6 +29,7 @@ class CRouter {
   static String ALL_GROUPS_POST = '/all_groups_post';
   static String CREATE_GROUP = '/create_group';
   static String GROUP_LIST = '/group_list';
+  static String GROUP_INFO = '/group_info';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -95,6 +99,17 @@ class CRouter {
           builder: (_) => const GroupListPage(),
           settings: settings,
         );
+
+      case "/group_info":
+        if (settings.arguments is GetMyGroupListModel) {
+          // the details page for one specific user
+          return MaterialPageRoute(
+            builder: (_) =>
+                GroupInfoPage(model: settings.arguments as GetMyGroupListModel),
+            settings: settings,
+            fullscreenDialog: true,
+          );
+        }
     }
     return null;
   }
