@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../widgets/appbar_and_bottombar/basic_appbar.dart';
 import '/util/router.dart';
 import '/provider/group/get_my_group_list_provider.dart';
 import '/services/data_layer.dart';
@@ -8,7 +9,6 @@ import '/widgets/widget_util/show_toast.dart';
 import '/widgets/image/customize_image_widget.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '../group_viewmodel.dart';
-import '/widgets/appbar/basic_appbar.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../widgets/appbar_and_bottombar/basic_appbar.dart';
 import '/services/data_layer.dart';
 import '/widgets/widget_util/show_toast.dart';
 import '/model/profile/following_model.dart';
@@ -15,7 +16,6 @@ import 'package:pretty_qr_code/pretty_qr_code.dart';
 import '/util/app_util.dart';
 import '/widgets/column_and_row/custom_icon_row.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
-import '/widgets/appbar/basic_appbar.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 

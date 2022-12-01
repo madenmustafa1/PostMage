@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../widgets/appbar_and_bottombar/basic_appbar.dart';
 import '/view/group/group_info/group_info_add_user_modal.dart';
-import '/widgets/appbar/basic_appbar.dart';
 import '/provider/group/get_my_group_list_info_provider.dart';
 import '/dependency_injection/setup.dart';
 import '/model/group/get_my_group_list_info.dart';
@@ -11,7 +11,6 @@ import '/model/group/get_my_group_list_model.dart';
 import '/model/group/remove_user_group_model.dart';
 import '/services/data_layer.dart';
 import '/util/constants.dart';
-import '/widgets/appbar/drawer_menu.dart';
 import '/widgets/image/customize_image_widget.dart';
 import '/widgets/text_and_button/simple_text.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
@@ -61,7 +60,7 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
       floatingActionButton: myGrouListModel.status != DataStatus.SUCCESS
           ? Container()
           : FloatingActionButton(
-              tooltip: constants.addUserToGroup,
+              tooltip: widget._constants.addUserToGroup,
               child: const Icon(Icons.person_add),
               onPressed: () {
                 getFollowerData();
@@ -100,13 +99,13 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
                               groupId: widget.model.groupId!,
                             ),
                           ),
-                          tooltip: constants.giveAdminPermission,
+                          tooltip: widget._constants.giveAdminPermission,
                           icon: const Icon(
                             Icons.person,
                           ),
                         ),
                         IconButton(
-                          tooltip: constants.removeUserFromGroup,
+                          tooltip: widget._constants.removeUserFromGroup,
                           onPressed: () => removeUser(
                             UserGroupModel(
                               id: myGrouListModel.data![index]!.id,
@@ -152,10 +151,10 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
     Navigator.pop(context);
     var result = await futureResult;
     if (result.status == DataStatus.SUCCESS) {
-      ShowToast.successToast(constants.deleteUserToGroupSuccess);
+      ShowToast.successToast(widget._constants.deleteUserToGroupSuccess);
     } else {
       ShowToast.errorToast(
-          result.errorData?.reason ?? constants.TR_GENERAL_ERROR);
+          result.errorData?.reason ?? widget._constants.TR_GENERAL_ERROR);
     }
   }
 
@@ -164,10 +163,10 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
     Navigator.pop(context);
     var result = await futureResult;
     if (result.status == DataStatus.SUCCESS) {
-      ShowToast.successToast(constants.adminToGroupSuccess);
+      ShowToast.successToast(widget._constants.adminToGroupSuccess);
     } else {
       ShowToast.errorToast(
-          result.errorData?.reason ?? constants.TR_GENERAL_ERROR);
+          result.errorData?.reason ?? widget._constants.TR_GENERAL_ERROR);
     }
   }
 
@@ -185,7 +184,7 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
       );
     } else {
       ShowToast.errorToast(
-        result.errorData?.reason ?? constants.TR_GENERAL_ERROR,
+        result.errorData?.reason ?? widget._constants.TR_GENERAL_ERROR,
       );
     }
   }

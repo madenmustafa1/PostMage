@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mdntls/view/group/group_viewmodel.dart';
+import '../widgets/appbar_and_bottombar/bottombar_menu.dart';
 import '/services/repo/app_http_repository.dart';
 import '/services/service/app_http_service.dart';
 import '/view/home/home_view_model.dart';
@@ -19,6 +20,7 @@ void setup() {
 
   //Util
   getIt.registerFactory<PermissionUtil>(() => PermissionUtil());
+  getIt.registerFactory<BottombarMenu>(() => BottombarMenu());
   getIt.registerLazySingleton<Constants>(() => Constants());
 
   //ViewModel

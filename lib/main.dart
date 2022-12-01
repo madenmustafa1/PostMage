@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/view/main_activity/main_activity.dart';
 import '/model/login/login_model.dart';
 import '/util/app_user.dart';
 import '/view/home/home_page.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
             );
           }
           if (!value.data!) return OnboardingScreen();
-          return HomePage();
+          return MainActivity();
         },
       ),
     );
