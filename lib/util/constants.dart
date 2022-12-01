@@ -83,7 +83,9 @@ class Constants {
   String adminToGroupSuccess = "Kullanıcı yönetici oldu.";
   String addUserToGroup = "Kullanıcı ekle";
   String addUserToGroupSuccess = "Kullanıcı eklendi";
-  String addUserToGroupFail = "Kullanıcı eklendi";
+  String addUserToGroupFail = "Kullanıcı eklenirken hata oluştu.";
+  String giveAdminPermission = "Admin yetkisi ver";
+  String removeUserFromGroup = "Gruptan çıkar";
 
   //Add User
   String addUserPageTitle = "Kişi ekle";

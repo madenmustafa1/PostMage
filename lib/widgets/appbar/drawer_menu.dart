@@ -49,10 +49,10 @@ Widget customDrawerMenu(BuildContext context) {
             Navigator.pushNamed(context, CRouter.ADD_USER);
           },
         ),
-        //MakeGroupPageTitle
+        //GroupPageTitle
         ListTile(
           leading: const Icon(Icons.group),
-          title: Text(constants.makeGroupPageTitle),
+          title: Text(constants.groups),
           onTap: () {
             Navigator.pop(context);
             Navigator.pushNamed(context, CRouter.ALL_GROUPS_POST);

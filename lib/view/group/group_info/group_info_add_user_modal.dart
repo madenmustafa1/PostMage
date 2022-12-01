@@ -3,7 +3,7 @@ import 'package:mdntls/dependency_injection/setup.dart';
 import 'package:mdntls/services/data_layer.dart';
 import 'package:mdntls/util/constants.dart';
 import 'package:mdntls/widgets/widget_util/show_toast.dart';
-import '../../../model/group/add_user_to_group_model.dart';
+import '/model/group/add_user_to_group_model.dart';
 import '../group_viewmodel.dart';
 import '/model/profile/get_follower_data.dart';
 import '/widgets/image/customize_image_widget.dart';
@@ -14,12 +14,8 @@ class GroupInfoAddUserModal {
   Constants constants = getIt<Constants>();
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
 
-  void showModalBottomSheets(
-    BuildContext context,
-    GetFollowerDataModel model,
-    String groupId,
-    VoidCallback callback
-  ) async {
+  void showModalBottomSheets(BuildContext context, GetFollowerDataModel model,
+      String groupId, VoidCallback callback) async {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -40,7 +36,7 @@ class GroupInfoAddUserModal {
                           groupId: groupId,
                         ),
                         context,
-                        callback
+                        callback,
                       ),
                       child: const Icon(Icons.add),
                     ),
@@ -64,10 +60,15 @@ class GroupInfoAddUserModal {
     );
   }
 
-  void addUser(AddUserToGroupModel model, BuildContext context, VoidCallback callback) async {
+  void addUser(
+    AddUserToGroupModel model,
+    BuildContext context,
+    VoidCallback callback,
+  ) async {
     var result = await _groupViewModel.addUserToGroup(model);
 
     if (result.status == DataStatus.SUCCESS && result.data == true) {
+      callback();
       ShowToast.successToast(constants.addUserToGroupSuccess);
     } else {
       ShowToast.successToast(

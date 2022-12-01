@@ -61,7 +61,8 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
       floatingActionButton: myGrouListModel.status != DataStatus.SUCCESS
           ? Container()
           : FloatingActionButton(
-              child: const Icon(Icons.add),
+              tooltip: constants.addUserToGroup,
+              child: const Icon(Icons.person_add),
               onPressed: () {
                 getFollowerData();
               },
@@ -88,22 +89,33 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   trailing: SizedBox(
-                    width: 60,
+                    width: 100,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        GestureDetector(
-                          onTap: () => makeUserAdmin(),
-                          child: const Icon(Icons.person),
-                        ),
-                        GestureDetector(
-                          onTap: () => removeUser(
+                        IconButton(
+                          onPressed: () => makeUserAdmin(
                             UserGroupModel(
                               id: myGrouListModel.data![index]!.id,
                               groupId: widget.model.groupId!,
                             ),
                           ),
-                          child: const Icon(Icons.clear_rounded),
+                          tooltip: constants.giveAdminPermission,
+                          icon: const Icon(
+                            Icons.person,
+                          ),
+                        ),
+                        IconButton(
+                          tooltip: constants.removeUserFromGroup,
+                          onPressed: () => removeUser(
+                            UserGroupModel(
+                              id: myGrouListModel.data![index]!.id,
+                              groupId: widget.model.groupId!,
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.clear_rounded,
+                          ),
                         )
                       ],
                     ),
@@ -128,8 +140,9 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
   }
 
   void getMyGroupListInfo() async {
-    var result =
-        await widget._groupViewModel.getMyGroupListInfo(widget.model.groupId!);
+    var result = await widget._groupViewModel.getMyGroupListInfo(
+      widget.model.groupId!,
+    );
 
     ref.read(getGroupListInfoProvider.notifier).update(result);
   }
@@ -146,8 +159,16 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
     }
   }
 
-  void makeUserAdmin() async {
+  void makeUserAdmin(UserGroupModel model) async {
+    var futureResult = widget._groupViewModel.putAddAdminToGroup(model);
     Navigator.pop(context);
+    var result = await futureResult;
+    if (result.status == DataStatus.SUCCESS) {
+      ShowToast.successToast(constants.adminToGroupSuccess);
+    } else {
+      ShowToast.errorToast(
+          result.errorData?.reason ?? constants.TR_GENERAL_ERROR);
+    }
   }
 
   void getFollowerData() async {
@@ -155,9 +176,13 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
 
     if (result.status == DataStatus.SUCCESS && result.data != null) {
       widget._addUserInfoModal.showModalBottomSheets(
-          context, result.data!, widget.model.groupId!, () {
-        getMyGroupListInfo();
-      });
+        context,
+        result.data!,
+        widget.model.groupId!,
+        () {
+          getMyGroupListInfo();
+        },
+      );
     } else {
       ShowToast.errorToast(
         result.errorData?.reason ?? constants.TR_GENERAL_ERROR,
