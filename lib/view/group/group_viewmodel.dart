@@ -1,9 +1,7 @@
 import 'dart:ffi';
-import 'package:flutter/cupertino.dart';
 import 'package:mdntls/util/constants.dart';
 import '../../model/group/get_my_group_list_info.dart';
 import '../../model/profile/get_follower_data.dart';
-import '../../model/profile/put_follower_data.dart';
 import '/model/group/get_my_group_list_model.dart';
 import '/model/group/get_group_post_request_model.dart';
 import '/model/group/create_group_request_model.dart';
@@ -13,12 +11,9 @@ import '/model/profile/group_profile_info.dart';
 import '/services/data_layer.dart';
 import '/model/group/add_user_to_group_model.dart';
 import '/services/repo/app_http_repository.dart';
-import '/util/app_user.dart';
 import '/dependency_injection/setup.dart';
 import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
-
 import '../../model/group/remove_user_group_model.dart';
 
 class GroupViewModel {

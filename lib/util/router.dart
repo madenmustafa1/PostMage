@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mdntls/view/main_activity/main_activity.dart';
 import '../model/group/get_my_group_list_model.dart';
 import '/view/group/all_groups_post/all_groups_post_page.dart';
 import '/view/group/create_group/create_group_page.dart';
@@ -13,7 +14,6 @@ import '../view/qr_code/scan_qr_code_page.dart';
 import '/view/add_post/add_post_page.dart';
 import '/view/tutorial/tutorial_page.dart';
 import '/view/login/sign_in_page.dart';
-import '/view/home/home_page.dart';
 import '/view/login/sign_up_page.dart';
 
 class CRouter {
@@ -44,12 +44,18 @@ class CRouter {
           builder: (_) => SignUpPage(),
           settings: settings,
         );
-
+      case '/home':
+        return CupertinoPageRoute(
+          builder: (_) => MainActivity(),
+          settings: settings,
+        );
+      /*
       case '/home':
         return CupertinoPageRoute(
           builder: (_) => HomePage(),
           settings: settings,
         );
+        */
       case '/tutorial':
         return CupertinoPageRoute(
           builder: (_) => TutorialPage(),

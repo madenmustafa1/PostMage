@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mdntls/view/main_activity/main_activity.dart';
 import '/model/login/login_model.dart';
 import '/util/app_user.dart';
-import '/view/home/home_page.dart';
 import '/util/router.dart';
 import '/view/onboarding/onboarding_screen.dart';
 import '/util/responsive_constants.dart';
