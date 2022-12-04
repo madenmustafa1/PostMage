@@ -10,8 +10,8 @@ import '/services/repo/app_http_repository.dart';
 class AddPostViewModel {
   final AppHttpRepository _appHttpRepository = getIt<AppHttpRepository>();
 
-  Future<bool> sharePost(
-      Uint8List? selectedImageBytes, String userComment, XFile? xFile) async {
+  Future<bool> sharePost(Uint8List? selectedImageBytes, String userComment,
+      XFile? xFile, String? groupId) async {
     if (selectedImageBytes == null) return false;
     if (xFile == null) return false;
     File file = File(xFile.path);
@@ -20,6 +20,7 @@ class AddPostViewModel {
       AddPostModel(
         file: file,
         description: userComment,
+        groupId: groupId,
       ),
     );
 

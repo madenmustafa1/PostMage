@@ -63,8 +63,18 @@ class CRouter {
         );
 
       case '/add_post':
+        if (settings.arguments != null) {
+          try {
+            return CupertinoPageRoute(
+              builder: (_) =>
+                  AddPostPage(groupId: settings.arguments as String),
+              settings: settings,
+              fullscreenDialog: true,
+            );
+          } catch (_) {}
+        }
         return CupertinoPageRoute(
-          builder: (_) => const AddPostPage(),
+          builder: (_) => AddPostPage(),
           settings: settings,
           fullscreenDialog: true,
         );

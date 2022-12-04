@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/widgets/other/custom_fab.dart';
+import '../../../util/router.dart';
 import '../../../widgets/appbar_and_bottombar/basic_appbar.dart';
 import '/view/group/group_info/group_info_add_user_modal.dart';
 import '/provider/group/get_my_group_list_info_provider.dart';
@@ -59,12 +61,10 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
       body: body(),
       floatingActionButton: myGrouListModel.status != DataStatus.SUCCESS
           ? Container()
-          : FloatingActionButton(
-              tooltip: widget._constants.addUserToGroup,
-              child: const Icon(Icons.person_add),
-              onPressed: () {
-                getFollowerData();
-              },
+          : CustomFab.groupInfoFab(
+              context,
+              /** Add Post */ () => addPost(),
+              /** Add User */ () => getFollowerData(),
             ),
     );
   }
@@ -187,5 +187,14 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
         result.errorData?.reason ?? widget._constants.TR_GENERAL_ERROR,
       );
     }
+  }
+
+  void addPost() async {
+    var result = await Navigator.pushNamed(
+      context,
+      CRouter.ADD_POST,
+      arguments: widget.model.groupId,
+    );
+    //if (result != null) forceUpdatePostList(ref);
   }
 }

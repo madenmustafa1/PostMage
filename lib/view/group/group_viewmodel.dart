@@ -46,8 +46,9 @@ class GroupViewModel {
       }
     });
 
-    return await _appHttpRepository
-        .getGroupPost(GetGroupPostRequestModel(groupId: list));
+    return await _appHttpRepository.getGroupPost(
+      GetGroupPostRequestModel(groupId: list),
+    );
   }
 
   Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList() async {
@@ -90,7 +91,9 @@ class GroupViewModel {
     }
   }
 
-  Future<DataLayer<bool>> addUserToGroup(AddUserToGroupModel model,) async {
+  Future<DataLayer<bool>> addUserToGroup(
+    AddUserToGroupModel model,
+  ) async {
     try {
       return await _appHttpRepository.putAddUserToGroup(model);
     } catch (e) {

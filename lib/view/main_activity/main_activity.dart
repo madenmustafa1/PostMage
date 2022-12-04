@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../enum/bottom_nav_state.dart';
+import '../../widgets/appbar_and_bottombar/drawer_menu.dart';
+import '../../widgets/other/custom_fab.dart';
 import '../../enum/list_type.dart';
 import '../../provider/home/home_page_provider.dart';
-import '../../util/color_util.dart';
 import '../../util/router.dart';
 import '../../widgets/appbar_and_bottombar/basic_appbar.dart';
 import '../../dependency_injection/setup.dart';
@@ -31,18 +33,30 @@ class _MainActivityState extends ConsumerState<MainActivity> {
       body: Center(
         child: BottombarMenu.widgetOptions.elementAt(_selectedIndex),
       ),
+      drawer: customDrawerMenu(context),
       bottomNavigationBar: widget._bottombarMenu.bottomNavigationBar(
         _selectedIndex,
         (p0) => _onItemTapped(p0),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          var result = await Navigator.pushNamed(context, CRouter.ADD_POST);
-          if (result != null) forceUpdatePostList(ref);
-        },
-        backgroundColor: ColorUtil.MAIN_COLOR,
-      ),
+      floatingActionButton: returnFab(),
+    );
+  }
+
+  Widget returnFab() {
+    if (_selectedIndex == BottomNavState.GROUP.index) {
+      return CustomFab.allGroupsFab(context);
+    } else if (_selectedIndex == BottomNavState.PROFILE.index) {
+      return CustomFab.homeOrProfileFab(
+        context,
+        Icons.person_add,
+        () => Navigator.pushNamed(context, CRouter.ADD_USER),
+      );
+    }
+
+    return CustomFab.homeOrProfileFab(
+      context,
+      Icons.add,
+      () => homeFabListener(),
     );
   }
 
@@ -60,5 +74,10 @@ class _MainActivityState extends ConsumerState<MainActivity> {
     if (model != null) {
       ref.read(getFollowedUsersPostsProvider.notifier).update(model);
     }
+  }
+
+  void homeFabListener() async {
+    var result = await Navigator.pushNamed(context, CRouter.ADD_POST);
+    if (result != null) forceUpdatePostList(ref);
   }
 }

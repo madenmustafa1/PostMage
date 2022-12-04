@@ -21,25 +21,7 @@ Widget customDrawerMenu(BuildContext context) {
             textColor: ColorUtil.WHITE,
           ),
         ),
-        //HomePageTitle
-        ListTile(
-          leading: const Icon(
-            Icons.home,
-          ),
-          title: Text(constants.homePageTitle),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        //ProfilePageTitle
-        ListTile(
-          leading: const Icon(Icons.person),
-          title: Text(constants.profilePageTitle),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, CRouter.PROFILE);
-          },
-        ),
+
         //AddUserPageTitle
         ListTile(
           leading: const Icon(Icons.add),
@@ -49,15 +31,7 @@ Widget customDrawerMenu(BuildContext context) {
             Navigator.pushNamed(context, CRouter.ADD_USER);
           },
         ),
-        //GroupPageTitle
-        ListTile(
-          leading: const Icon(Icons.group),
-          title: Text(constants.groups),
-          onTap: () {
-            Navigator.pop(context);
-            Navigator.pushNamed(context, CRouter.ALL_GROUPS_POST);
-          },
-        ),
+
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 14.0),
           child: Divider(
@@ -84,3 +58,38 @@ Widget customDrawerMenu(BuildContext context) {
     ),
   );
 }
+
+
+
+/*
+  //HomePageTitle
+        ListTile(
+          leading: const Icon(
+            Icons.home,
+          ),
+          title: Text(constants.homePageTitle),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        //ProfilePageTitle
+        ListTile(
+          leading: const Icon(Icons.person),
+          title: Text(constants.profilePageTitle),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, CRouter.PROFILE);
+          },
+        ),
+
+          //GroupPageTitle
+        ListTile(
+          leading: const Icon(Icons.group),
+          title: Text(constants.groups),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pushNamed(context, CRouter.ALL_GROUPS_POST);
+          },
+        ),
+
+*/

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +18,12 @@ import 'add_post_view_model.dart';
 import 'add_post_widgets/add_post_image.dart';
 
 class AddPostPage extends ConsumerStatefulWidget {
-  const AddPostPage({Key? key}) : super(key: key);
+  AddPostPage({
+    Key? key,
+    this.groupId,
+  }) : super(key: key);
+
+  String? groupId;
 
   @override
   AddPostPageState createState() => AddPostPageState();
@@ -105,8 +112,12 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   }
 
   void saveButton() async {
-    var result =
-        await viewModel.sharePost(selectedImageBytes, content.text, pickedFile);
+    var result = await viewModel.sharePost(
+      selectedImageBytes,
+      content.text,
+      pickedFile,
+      widget.groupId,
+    );
 
     if (result) {
       ShowToast.successToast(constants.TR_SHARED_SUCCESSFULLY);
