@@ -38,7 +38,7 @@ class GroupPostListWidget extends ConsumerWidget {
     return Column(
       children: [
         SizedBox(
-          height: AppUtil.getHeight(context) / 1.2,
+          height: AppUtil.getHeight(context) / 1.25,
           child: ListView.builder(
             itemCount: followedUsersPostModel != null
                 ? followedUsersPostModel!.length
@@ -73,6 +73,7 @@ class GroupPostListWidget extends ConsumerWidget {
                 showListImage(
                   context: context,
                   model: model,
+                  name: model?.groupName,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(

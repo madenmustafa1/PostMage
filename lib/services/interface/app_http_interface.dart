@@ -20,6 +20,8 @@ abstract class AppHttpInterface {
 
   Future<DataLayer<List<GetUserPostModel?>?>> getMyPosts();
 
+  Future<DataLayer<GetUserPostModel?>> getPosts(String postId);
+
   Future<DataLayer<bool>> addPost(AddPostModel model);
 
   Future<DataLayer<UserProfileInfoModel?>> getMyProfileInfo();
@@ -37,7 +39,8 @@ abstract class AppHttpInterface {
   Future<DataLayer<bool>> putAddUserToGroup(AddUserToGroupModel model);
 
   Future<DataLayer<List<GetUserPostModel?>?>> getGroupPost(
-      GetGroupPostRequestModel model);
+    GetGroupPostRequestModel model,
+  );
 
   Future<DataLayer<List<GetMyGroupListModel?>?>> getMyGroupList();
 

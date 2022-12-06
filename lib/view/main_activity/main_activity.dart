@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/widgets/widget_util/calc_sized_box.dart';
 import '../../enum/bottom_nav_state.dart';
 import '../../widgets/appbar_and_bottombar/drawer_menu.dart';
 import '../../widgets/other/custom_fab.dart';
@@ -30,8 +31,16 @@ class _MainActivityState extends ConsumerState<MainActivity> {
       appBar: BasicAppBar(
         title: widget._bottombarMenu.indexToAppbarName(_selectedIndex),
       ),
-      body: Center(
-        child: BottombarMenu.widgetOptions.elementAt(_selectedIndex),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Center(
+              child: BottombarMenu.widgetOptions.elementAt(_selectedIndex),
+            ),
+          ),
+          //CalcSizedBox(calc: 200)
+        ],
       ),
       drawer: customDrawerMenu(context),
       bottomNavigationBar: widget._bottombarMenu.bottomNavigationBar(

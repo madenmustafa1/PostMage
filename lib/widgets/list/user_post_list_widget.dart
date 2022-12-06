@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/view/viewmodels/post_viewmodel.dart';
 import '/provider/profile/profile_page_provider.dart';
 import '/widgets/list/list_item/like_size_text.dart';
 import '/enum/list_type.dart';
@@ -38,7 +39,7 @@ class UserPostListWidget extends ConsumerWidget {
     return Column(
       children: [
         SizedBox(
-          height: AppUtil.getHeight(context) / 1.2,
+          height: AppUtil.getHeight(context) / 1.27,
           child: ListView.builder(
             itemCount: followedUsersPostModel != null
                 ? followedUsersPostModel!.length

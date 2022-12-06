@@ -9,6 +9,7 @@ class GetUserPostModel {
     this.comment,
     required this.objectId,
     required this.userId,
+    this.groupName,
   });
   String? photoName;
   String? nameSurname;
@@ -17,6 +18,7 @@ class GetUserPostModel {
   late final int creationTime;
   List<String?>? likeUserId;
   List<Comment?>? comment;
+  String? groupName;
   late final String objectId;
   late final String userId;
 
@@ -24,6 +26,7 @@ class GetUserPostModel {
     photoName = json['photoName'];
     nameSurname = json['nameSurname'];
     description = json['description'];
+    groupName = json['groupName'];
     groupId = json['groupId'];
     creationTime = json['creationTime'];
 
@@ -55,6 +58,7 @@ class GetUserPostModel {
     _data['comment'] = comment?.map((e) => e?.toJson()).toList();
     _data['objectId'] = objectId;
     _data['userId'] = userId;
+    _data['groupName'] = groupName;
     return _data;
   }
 }

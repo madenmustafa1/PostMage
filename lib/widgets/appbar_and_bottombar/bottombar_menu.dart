@@ -43,18 +43,9 @@ class BottombarMenu {
   }
 
   String indexToAppbarName(int index) {
-    if (index == 0) {
-      return _constants.homePageTitle;
-    }
-
-    if (index == 1) {
-      return _constants.groups;
-    }
-
-    if (index == 2) {
-      return _constants.profilePageTitle;
-    }
-
+    if (index == 0) return _constants.homePageTitle;
+    if (index == 1) return _constants.groups;
+    if (index == 2) return _constants.profilePageTitle;
     return _constants.homePageTitle;
   }
 }

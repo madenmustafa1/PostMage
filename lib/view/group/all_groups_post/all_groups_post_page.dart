@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import '/util/app_util.dart';
 import '/widgets/list/group_post_list.dart';
@@ -11,8 +10,7 @@ class AllGroupsPostPage extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  Constants constants = getIt<Constants>();
-  //final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
+  final Constants constants = getIt<Constants>();
 
   @override
   Widget build(BuildContext context) {

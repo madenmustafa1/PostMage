@@ -3,8 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mdntls/widgets/other/custom_fab.dart';
+import '../../../model/profile/group_profile_info.dart';
+import '../../../provider/group/get_group_post_provider.dart';
+import '../../../provider/profile/profile_page_provider.dart';
 import '../../../util/router.dart';
 import '../../../widgets/appbar_and_bottombar/basic_appbar.dart';
+import '../../profile/profile_viewmodel.dart';
 import '/view/group/group_info/group_info_add_user_modal.dart';
 import '/provider/group/get_my_group_list_info_provider.dart';
 import '/dependency_injection/setup.dart';
@@ -26,6 +30,7 @@ class GroupInfoPage extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
+  final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
   final Constants _constants = getIt<Constants>();
   GetMyGroupListModel model;
 
@@ -195,6 +200,25 @@ class _GroupInfoPageState extends ConsumerState<GroupInfoPage> {
       CRouter.ADD_POST,
       arguments: widget.model.groupId,
     );
-    //if (result != null) forceUpdatePostList(ref);
+    if (result != null) {
+      getMyProfileInfo();
+    }
+  }
+
+  //Fotoğraf eklendikten sonra gruplardaki postları güncelliyor.
+  void getMyProfileInfo() async {
+    var model = await widget._profileViewModel.getMyProfileInfo();
+
+    if (model.data != null) {
+      ref.read(getProfileInfoProvider.notifier).update(model.data);
+      writeGroupPost(model.data);
+    }
+  }
+
+  void writeGroupPost(UserProfileInfoModel? _userProfileModel) async {
+    var model = await widget._groupViewModel.getGroupPost(_userProfileModel!);
+    if (model.data != null) {
+      ref.read(getGroupPostsProvider.notifier).update(model.data!);
+    }
   }
 }

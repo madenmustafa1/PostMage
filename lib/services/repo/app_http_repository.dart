@@ -95,4 +95,9 @@ class AppHttpRepository implements AppHttpInterface {
   Future<DataLayer<bool?>> putAddAdminToGroup(UserGroupModel model) async {
     return await _appHttpService.putAddAdminToGroup(model);
   }
+
+  @override
+  Future<DataLayer<GetUserPostModel?>> getPosts(String postId) async {
+    return await _appHttpService.getPosts(postId);
+  }
 }

@@ -450,4 +450,36 @@ class AppHttpService implements AppHttpInterface {
       status: DataStatus.SUCCESS,
     );
   }
+
+  @override
+  Future<DataLayer<GetUserPostModel?>> getPosts(String postId) async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.GET_POST,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      queryParameters: {
+        "postId": postId,
+      },
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: GetUserPostModel.fromJson(response.data),
+      status: DataStatus.SUCCESS,
+    );
+  }
 }
