@@ -71,19 +71,25 @@ class Comment {
   });
   late final String userId;
   late final String comment;
+  String? photoName;
+  String? nameSurname;
   late final int creationTime;
 
   Comment.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
     comment = json['comment'];
+    photoName = json['photoName'];
     creationTime = json['creationTime'];
+    nameSurname = json['nameSurname'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['userId'] = userId;
     _data['comment'] = comment;
+    _data['photoName'] = photoName;
     _data['creationTime'] = creationTime;
+    _data['nameSurname'] = nameSurname;
     return _data;
   }
 }

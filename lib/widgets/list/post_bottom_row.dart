@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:mdntls/util/router.dart';
 import '/util/date_util.dart';
 import '/model/posts/get_user_post_model.dart';
 import '/util/app_util.dart';
@@ -40,10 +41,8 @@ class PostBottomRowWidget extends StatelessWidget {
                 ),
                 IconButton(
                   color: ColorUtil.WHITE,
-                  onPressed: () {},
-                  icon: IconsUtil.commentIcon(
-                    size: 25,
-                  ),
+                  onPressed: () => goToCommentsPage(context),
+                  icon: IconsUtil.commentIcon(size: 25),
                 )
               ],
             ),
@@ -56,6 +55,14 @@ class PostBottomRowWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void goToCommentsPage(BuildContext context) {
+    Navigator.pushNamed(
+      context,
+      CRouter.COMMENTS,
+      arguments: model?.objectId,
     );
   }
 }

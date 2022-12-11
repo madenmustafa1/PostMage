@@ -20,7 +20,9 @@ abstract class AppHttpInterface {
 
   Future<DataLayer<List<GetUserPostModel?>?>> getMyPosts();
 
-  Future<DataLayer<GetUserPostModel?>> getPosts(String postId);
+  Future<DataLayer<GetUserPostModel?>> getPost(String postId);
+
+  Future<DataLayer<List<Comment>?>> getComments(String postId);
 
   Future<DataLayer<bool>> addPost(AddPostModel model);
 

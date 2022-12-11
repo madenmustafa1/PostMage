@@ -61,6 +61,9 @@ class Constants {
   String TR_MAKE_COMMENT = "Açıklama yap";
   String TR_SHARED_SUCCESSFULLY = "Post paylaşıldı";
 
+  //Comments
+  String commentsPageTitle = "Yorumlar";
+
   //Home Page
   String homePageTitle = "Ana sayfa";
   String secondText = "2";

@@ -6,12 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mdntls/services/data_layer.dart';
 import '../../../widgets/appbar_and_bottombar/basic_appbar.dart';
+import '../../post/add_post/add_post_widgets/add_post_image.dart';
 import '/widgets/widget_util/show_toast.dart';
 import '../group_viewmodel.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
 import '/widgets/text_and_button/simple_button.dart';
 import '/widgets/widget_util/calc_sized_box.dart';
-import '../../add_post/add_post_widgets/add_post_image.dart';
 import '/dependency_injection/setup.dart';
 import '/util/constants.dart';
 
@@ -57,7 +57,6 @@ class _CreateGroupPageState extends ConsumerState<CreateGroupPage> {
                 maxlines: 3,
               ),
               const CalcSizedBox(calc: 100),
-
               const CalcSizedBox(calc: 20),
               SimpleButton(
                 buttonText: constants.TR_SAVE,

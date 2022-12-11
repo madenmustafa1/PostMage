@@ -15,7 +15,6 @@ class HomePage extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
- 
   final HomeViewModel _homeViewModel = getIt<HomeViewModel>();
 
   @override

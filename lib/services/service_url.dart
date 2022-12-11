@@ -15,6 +15,7 @@ class ServiceUrl {
   static const String USER_POSTS = "user-posts";
   static const String MY_POSTS = "/my-posts";
   static const String GET_POST = "/get-post";
+  static const String GET_COMMENTS = "/get-comments";
   static const String FOLLOWED_USERS_POSTS = "/followed-users-posts";
   static const String ADD_POSTS = "/add-posts";
   static const String FOLLOWER_DATA = "/follower-data";

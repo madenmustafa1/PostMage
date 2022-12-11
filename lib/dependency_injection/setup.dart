@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mdntls/view/group/group_viewmodel.dart';
-import 'package:mdntls/view/viewmodels/post_viewmodel.dart';
+import 'package:mdntls/view/post/post_viewmodel.dart';
+import '../view/post/add_post/add_post_view_model.dart';
 import '../widgets/appbar_and_bottombar/bottombar_menu.dart';
 import '/services/repo/app_http_repository.dart';
 import '/services/service/app_http_service.dart';
@@ -11,7 +12,6 @@ import '/services/repo/login_repository.dart';
 import '/services/service/login_service.dart';
 import '/util/shared_preferences.dart';
 import '/util/permission_util.dart';
-import '/view/add_post/add_post_view_model.dart';
 import '/util/constants.dart';
 import '/view/login/login_viewmodel.dart';
 

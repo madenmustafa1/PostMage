@@ -2,8 +2,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mdntls/view/main_activity/main_activity.dart';
+import 'package:mdntls/view/post/comments/comments_page.dart';
+import '../view/main_activity/main_activity.dart';
 import '../model/group/get_my_group_list_model.dart';
+import '../view/post/add_post/add_post_page.dart';
 import '/view/group/all_groups_post/all_groups_post_page.dart';
 import '/view/group/create_group/create_group_page.dart';
 import '/view/group/group_info/group_info_page.dart';
@@ -11,7 +13,6 @@ import '/view/group/group_list/group_list_page.dart';
 import '/view/add_user/add_user_page.dart';
 import '/view/profile/profile_page.dart';
 import '../view/qr_code/scan_qr_code_page.dart';
-import '/view/add_post/add_post_page.dart';
 import '/view/tutorial/tutorial_page.dart';
 import '/view/login/sign_in_page.dart';
 import '/view/login/sign_up_page.dart';
@@ -30,6 +31,7 @@ class CRouter {
   static String CREATE_GROUP = '/create_group';
   static String GROUP_LIST = '/group_list';
   static String GROUP_INFO = '/group_info';
+  static String COMMENTS = '/comments';
 
   static Route<dynamic>? customOnGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -75,6 +77,24 @@ class CRouter {
         }
         return CupertinoPageRoute(
           builder: (_) => AddPostPage(),
+          settings: settings,
+          fullscreenDialog: true,
+        );
+
+      case '/comments':
+        if (settings.arguments != null) {
+          try {
+            return CupertinoPageRoute(
+              builder: (_) => CommentsPage(
+                objectId: settings.arguments as String,
+              ),
+              settings: settings,
+              fullscreenDialog: true,
+            );
+          } catch (_) {}
+        }
+        return CupertinoPageRoute(
+          builder: (_) => CommentsPage(objectId: ""),
           settings: settings,
           fullscreenDialog: true,
         );
@@ -127,6 +147,7 @@ class CRouter {
           );
         }
     }
+
     return null;
   }
 }

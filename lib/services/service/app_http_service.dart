@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/remove_user_group_model.dart';
@@ -452,7 +453,7 @@ class AppHttpService implements AppHttpInterface {
   }
 
   @override
-  Future<DataLayer<GetUserPostModel?>> getPosts(String postId) async {
+  Future<DataLayer<GetUserPostModel?>> getPost(String postId) async {
     Response<dynamic> response = await dio.get(
       ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.GET_POST,
       options: Options(
@@ -479,6 +480,40 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: GetUserPostModel.fromJson(response.data),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<List<Comment>?>> getComments(String postId) async {
+    Response<dynamic> response = await dio.get(
+      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.GET_COMMENTS,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      queryParameters: {
+        "postId": postId,
+      },
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    //debugPrint(response.data);
+
+    return DataLayer(
+      data: (response.data as List).map((x) => Comment.fromJson(x)).toList(),
       status: DataStatus.SUCCESS,
     );
   }

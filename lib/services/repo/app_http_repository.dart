@@ -97,7 +97,12 @@ class AppHttpRepository implements AppHttpInterface {
   }
 
   @override
-  Future<DataLayer<GetUserPostModel?>> getPosts(String postId) async {
-    return await _appHttpService.getPosts(postId);
+  Future<DataLayer<GetUserPostModel?>> getPost(String postId) async {
+    return await _appHttpService.getPost(postId);
+  }
+
+  @override
+  Future<DataLayer<List<Comment>?>> getComments(String postId) async {
+    return await _appHttpService.getComments(postId);
   }
 }
