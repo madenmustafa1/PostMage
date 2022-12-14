@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:mdntls/services/data_layer.dart';
-import 'package:mdntls/widgets/post/comment_bottom_widget.dart';
-import 'package:mdntls/widgets/widget_util/show_toast.dart';
+import '/../../services/data_layer.dart';
+import '/../../widgets/post/comment_bottom_widget.dart';
+import '/../../widgets/widget_util/show_toast.dart';
 import '../../../model/posts/get_user_post_model.dart';
-import '../../../provider/post/comment_provider.dart';
-import '../../../provider/post/post_provider.dart';
 import '../../../widgets/image/customize_image_widget.dart';
+import '../../../widgets/text_and_button/rich_text_field.dart';
 import '../../../widgets/text_and_button/simple_text.dart';
 import '/../../util/color_util.dart';
 import '/../../view/post/post_viewmodel.dart';
@@ -30,46 +28,77 @@ class CommentsPage extends ConsumerStatefulWidget {
 }
 
 class _CommentsPageState extends ConsumerState<CommentsPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
-      ref.read(commentProvider.notifier).resetComments();
-      getPost();
-    });
-  }
+  Constants constants = getIt<Constants>();
+  TextEditingController commentController = TextEditingController();
+  DataLayer<List<Comment>?> commentList = DataLayer(status: DataStatus.LOADING);
 
   @override
   Widget build(BuildContext context) {
-    var model = ref.watch(commentProvider);
     return Scaffold(
       appBar: BasicAppBar(
         title: widget._constants.commentsPageTitle,
       ),
       backgroundColor: ColorUtil.BACKGROUND_COLOR,
-      body: Column(
+      body: Stack(
         children: [
-          model != null
-              ? commentWidget(model)
-              : const Center(child: CircularProgressIndicator()),
+          Column(
+            children: [
+              FutureBuilder(
+                future: getPost(),
+                builder: (
+                  BuildContext context,
+                  AsyncSnapshot<DataLayer<List<Comment>?>> snapshot,
+                ) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.waiting:
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    default:
+                      if (snapshot.hasError) {
+                        ShowToast.errorToast(
+                          snapshot.data?.errorData?.reason ??
+                              widget._constants.TR_GENERAL_ERROR,
+                        );
+                        return Container();
+                      } else {
+                        return commentWidget(snapshot.data?.data);
+                      }
+                  }
+                },
+              )
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: RichTextField(
+                      controller: commentController,
+                      hintText: constants.addComment,
+                      suffixIcon: IconButton(
+                        icon: const Icon(Icons.send_rounded),
+                        onPressed: () => addComment(),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          )
         ],
       ),
     );
   }
 
-  void getPost() async {
-    var result = await widget._postViewModel.getComments(widget.objectId);
-
-    if (result.status == DataStatus.SUCCESS && result.data != null) {
-      ref.read(commentProvider.notifier).updateComments(result.data!);
-    } else {
-      ShowToast.errorToast(
-        result.errorData?.reason ?? widget._constants.TR_GENERAL_ERROR,
-      );
-    }
+  Future<DataLayer<List<Comment>?>> getPost() async {
+    return widget._postViewModel.getComments(widget.objectId);
   }
 
-  Widget commentWidget(List<Comment> model) {
+  Widget commentWidget(List<Comment>? model) {
+    if (model == null) return Container();
     return Expanded(
       child: ListView.builder(
         itemCount: model.length,
@@ -107,5 +136,10 @@ class _CommentsPageState extends ConsumerState<CommentsPage> {
         },
       ),
     );
+  }
+
+  void addComment() {
+    // TODO:  user-posts/update-posts
+    FocusScope.of(context).requestFocus(FocusNode());
   }
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../dependency_injection/setup.dart';
 import '../../model/posts/get_user_post_model.dart';
 import '../../services/data_layer.dart';

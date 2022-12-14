@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:mdntls/util/constants.dart';
 import '../../model/group/get_my_group_list_info.dart';
 import '../../model/profile/get_follower_data.dart';
@@ -65,7 +64,7 @@ class GroupViewModel {
     }
   }
 
-  Future<DataLayer<Bool?>> makeUserAdmin() async {
+  Future<DataLayer<bool?>> makeUserAdmin() async {
     return DataLayer(
       errorData: ErrorData(
         reason: _constants.TR_GENERAL_ERROR,

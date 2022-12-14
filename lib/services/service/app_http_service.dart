@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/remove_user_group_model.dart';

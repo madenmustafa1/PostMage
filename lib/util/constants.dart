@@ -63,6 +63,8 @@ class Constants {
 
   //Comments
   String commentsPageTitle = "Yorumlar";
+  String addComment = "Yorum ekle";
+
 
   //Home Page
   String homePageTitle = "Ana sayfa";

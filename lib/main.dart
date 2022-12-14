@@ -35,8 +35,8 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: CRouter.customOnGenerateRoute,
       builder: (context, widget) => ResponsiveWrapper.builder(
         BouncingScrollWrapper.builder(context, widget!),
-        maxWidth: 1200,
-        minWidth: 450,
+        //maxWidth: 1200,
+        //minWidth: 450,
         defaultScale: true,
         backgroundColor: ColorUtil.BACKGROUND_COLOR,
         breakpoints: ResponsiveConstants.BREAKPOINTS,
