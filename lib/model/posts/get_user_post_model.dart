@@ -32,7 +32,7 @@ class GetUserPostModel {
 
     try {
       if (json['likeUserId'] != null) {
-        likeUserId = List?.castFrom<dynamic, String>(json['likeUserId']);
+        likeUserId = List.castFrom<dynamic, String>(json['likeUserId']);
       }
 
       if (json['comment'] != null) {

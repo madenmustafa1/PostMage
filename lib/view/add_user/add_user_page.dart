@@ -37,7 +37,7 @@ class _AddUserPageState extends ConsumerState<AddUserPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) => _permissionUtil.permissonCameraHandler(),
     );
     _userProfileModel = ref.read(getProfileInfoProvider);

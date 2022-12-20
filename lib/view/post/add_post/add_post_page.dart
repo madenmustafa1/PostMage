@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import '../../../util/permission_util.dart';
 import '/widgets/text_and_button/switch_button.dart';
 import '/widgets/widget_util/show_toast.dart';
 import '/widgets/text_and_button/rich_text_field.dart';
@@ -37,6 +38,15 @@ class AddPostPageState extends ConsumerState<AddPostPage> {
   Uint8List? selectedImageBytes;
   AddPostViewModel viewModel = getIt<AddPostViewModel>();
   bool privateShareSwitched = false;
+  final PermissionUtil _permissionUtil = getIt<PermissionUtil>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _permissionUtil.permissonCameraHandler(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

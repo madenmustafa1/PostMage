@@ -9,7 +9,10 @@ class ServiceUrl {
     validateStatus: (status) => true,
   );
 
-  static const String BASE_URL = "http://192.168.1.21:8080/";
+  //For windows
+  //static const String BASE_URL = "http://192.168.1.21:8080/";
+  //For macos
+  static const String BASE_URL = "http://0.0.0.0:8080/";
 
   //User Posts Route
   static const String USER_POSTS = "user-posts";

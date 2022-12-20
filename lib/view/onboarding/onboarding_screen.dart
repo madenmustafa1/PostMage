@@ -71,7 +71,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
-                  child: FlatButton(
+                  child: ElevatedButton(
                     onPressed: () =>
                         Navigator.pushNamed(context, CRouter.TUTORIAL),
                     child: const Text(
@@ -120,7 +120,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Expanded(
                     child: Align(
                       alignment: FractionalOffset.bottomRight,
-                      child: FlatButton(
+                      child: ElevatedButton(
                         onPressed: () {
                           _pageController.nextPage(
                             duration: const Duration(milliseconds: 500),

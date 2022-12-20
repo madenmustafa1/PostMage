@@ -4,6 +4,7 @@ class PermissionUtil {
   void permissonCameraHandler() async {
     await [
       Permission.camera,
+      Permission.mediaLibrary,
     ].request();
     /*
     Map<Permission, PermissionStatus> statuses =
