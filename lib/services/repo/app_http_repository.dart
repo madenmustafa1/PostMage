@@ -1,3 +1,5 @@
+import 'package:mdntls/model/posts/update_post_model.dart';
+
 import '../../model/group/remove_user_group_model.dart';
 import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
@@ -104,5 +106,10 @@ class AppHttpRepository implements AppHttpInterface {
   @override
   Future<DataLayer<List<Comment>?>> getComments(String postId) async {
     return await _appHttpService.getComments(postId);
+  }
+
+  @override
+  Future<DataLayer<bool>> putUpdatePost(UpdatePostModel model) async {
+    return await _appHttpService.putUpdatePost(model);
   }
 }

@@ -70,10 +70,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Container(
+                  padding: const EdgeInsets.only(right: 15),
                   alignment: Alignment.centerRight,
-                  child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, CRouter.TUTORIAL),
+                  child: GestureDetector(
+                    onTap: () => Navigator.pushNamed(context, CRouter.TUTORIAL),
                     child: const Text(
                       'Atla',
                       style: TextStyle(
@@ -118,33 +118,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
                 if (_currentPage != _numPages - 1)
                   Expanded(
-                    child: Align(
-                      alignment: FractionalOffset.bottomRight,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.ease,
-                          );
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Text(
-                              'İleri',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 22.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 20),
+                      child: Align(
+                        alignment: FractionalOffset.bottomRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            _pageController.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: const [
+                              Text(
+                                'İleri',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22.0,
+                                ),
                               ),
-                            ),
-                            SizedBox(width: 10.0),
-                            Icon(
-                              Icons.arrow_forward,
-                              color: Colors.white,
-                              size: 30.0,
-                            ),
-                          ],
+                              SizedBox(width: 10.0),
+                              Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: 30.0,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

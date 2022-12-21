@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:mdntls/model/posts/update_post_model.dart';
 import '../../model/profile/get_follower_data.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/remove_user_group_model.dart';
@@ -513,6 +514,36 @@ class AppHttpService implements AppHttpInterface {
 
     return DataLayer(
       data: (response.data as List).map((x) => Comment.fromJson(x)).toList(),
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool>> putUpdatePost(UpdatePostModel model) async {
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.USER_POSTS + ServiceUrl.UPDATE_POST,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model.toJson(),
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: true,
       status: DataStatus.SUCCESS,
     );
   }

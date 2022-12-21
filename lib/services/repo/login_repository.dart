@@ -16,7 +16,7 @@ class LoginRepository implements LoginInterface {
       return LoginModel(isSucces: false, message: e.toString());
     }
   }
-
+ 
   @override
   Future<LoginModel> signUp(SignUpRequestModel signUpRequestModel) async {
     try {

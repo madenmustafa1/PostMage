@@ -26,7 +26,7 @@ class ProfilePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    getMyProfileInfo(ref);
+    _getMyProfileInfo(ref);
     return SingleChildScrollView(
       child: Stack(
         children: [
@@ -37,9 +37,11 @@ class ProfilePage extends ConsumerWidget {
                 child: Column(
                   children: [
                     const CalcSizedBox(calc: 35),
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 65.0,
-                      backgroundImage: AssetImage('assets/test_images/2.jpg'),
+                      backgroundImage: NetworkImage(
+                        _userProfileModel?.profilePhotoUrl ?? "",
+                      ),
                     ),
                     const CalcSizedBox(calc: 60),
                     Text(
@@ -66,7 +68,7 @@ class ProfilePage extends ConsumerWidget {
                       image: const AssetImage('assets/images/qr_code_icon.png'),
                       typeNumber: 3,
                       size: 100,
-                      data: _userProfileModel!.mail ?? "",
+                      data: _userProfileModel!.userId ?? "",
                       errorCorrectLevel: QrErrorCorrectLevel.M,
                       roundEdges: true,
                     )
@@ -92,7 +94,7 @@ class ProfilePage extends ConsumerWidget {
     );
   }
 
-  void getMyProfileInfo(WidgetRef ref) async {
+  void _getMyProfileInfo(WidgetRef ref) async {
     _userProfileModel = ref.watch(getProfileInfoProvider);
 
     var model = await _profileViewModel.getMyProfileInfo();
@@ -101,11 +103,9 @@ class ProfilePage extends ConsumerWidget {
       ref.read(getProfileInfoProvider.notifier).update(model.data);
     }
   }
-}
 
-/*
- backgroundColor: ColorUtil.GREY_PLATINUM,
-      appBar: BasicAppBar(
-        title: constants.profilePageTitle,
-      ),
-*/
+  void _updateProfilePhoto() {
+    //TODO
+    //profile/my-profile
+  }
+}
