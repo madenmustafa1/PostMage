@@ -1,5 +1,6 @@
 import 'package:mdntls/model/profile/get_follower_data.dart';
 
+import '../../model/posts/update_post_model.dart';
 import '/model/group/remove_user_group_model.dart';
 import '/model/group/get_my_group_list_info.dart';
 import '/model/group/get_my_group_list_model.dart';
@@ -25,6 +26,8 @@ abstract class AppHttpInterface {
   Future<DataLayer<List<Comment>?>> getComments(String postId);
 
   Future<DataLayer<bool>> addPost(AddPostModel model);
+
+  Future<DataLayer<bool>> putUpdatePost(UpdatePostModel model);
 
   Future<DataLayer<UserProfileInfoModel?>> getMyProfileInfo();
 

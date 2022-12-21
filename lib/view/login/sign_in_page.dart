@@ -95,9 +95,7 @@ class SignInPage extends StatelessWidget {
     String password = passwordController.text;
 
     LoginModel result = await loginViewModel.signIn(username, password);
-
-    debugPrint(result.isSucces.toString());
-
+    debugPrint(result.message.toString());
     if (result.isSucces) {
       Navigator.pushNamedAndRemoveUntil(
           context, CRouter.HOME, (route) => false);

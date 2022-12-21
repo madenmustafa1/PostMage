@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mdntls/util/app_util.dart';
 import '/../../services/data_layer.dart';
 import '/../../widgets/post/comment_bottom_widget.dart';
 import '/../../widgets/widget_util/show_toast.dart';
@@ -121,16 +122,21 @@ class _CommentsPageState extends ConsumerState<CommentsPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SimpleText(
-                  text: "text",
+                  text: model[index].comment,
                   textIsNormal: true,
                   optionalTextSize: 20,
                 ),
               ),
               CommentBottomRowWidget(model: model[index]),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: Divider(thickness: 1),
-              ),
+              if (index == model.length - 1)
+                SizedBox(
+                  height: AppUtil.getHeight(context) / 15,
+                )
+              else
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Divider(thickness: 1),
+                ),
             ],
           );
         },
@@ -138,8 +144,20 @@ class _CommentsPageState extends ConsumerState<CommentsPage> {
     );
   }
 
-  void addComment() {
-    // TODO:  user-posts/update-posts
+  void addComment() async {
+    Future<DataLayer<bool>> response = widget._postViewModel.addComment(
+      postId: widget.objectId,
+      comment: commentController.text,
+    );
+    commentController.text = "";
     FocusScope.of(context).requestFocus(FocusNode());
+    var result = await response;
+    if (result.status == DataStatus.SUCCESS) {
+      setState(() {});
+    } else {
+      ShowToast.errorToast(
+        result.errorData?.reason ?? constants.TR_GENERAL_ERROR,
+      );
+    }
   }
 }

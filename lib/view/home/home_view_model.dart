@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import '../../enum/list_type.dart';
 import '/services/data_layer.dart';
 import '/model/posts/get_user_post_model.dart';
@@ -11,18 +13,20 @@ class HomeViewModel {
     int limit = 100,
     required ListType listType,
   }) async {
-    DataLayer<List<GetUserPostModel?>?> model;
-    if (listType == ListType.HOME) {
-      model = await _appHttpRepository.getFollowedUsersPosts(limit: limit);
-    } else {
-      model = await _appHttpRepository.getMyPosts();
-    }
-
-    if (model.status == DataStatus.SUCCESS) {
-      if (model.data != null) {
-        return model.data!;
+    try {
+      DataLayer<List<GetUserPostModel?>?> model;
+      if (listType == ListType.HOME) {
+        model = await _appHttpRepository.getFollowedUsersPosts(limit: limit);
+      } else {
+        model = await _appHttpRepository.getMyPosts();
       }
-    }
+      if (model.status == DataStatus.SUCCESS) {
+        if (model.data != null) {
+          return model.data!;
+        }
+      }
+    } catch (e) {}
+
     return [];
   }
 }
