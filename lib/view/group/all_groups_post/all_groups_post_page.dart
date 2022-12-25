@@ -21,8 +21,8 @@ class AllGroupsPostPage extends StatelessWidget {
         width: AppUtil.getWidth(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const CalcSizedBox(calc: 200),
+          children: const [
+            CalcSizedBox(calc: 200),
             GroupPostListWidget(),
           ],
         ),

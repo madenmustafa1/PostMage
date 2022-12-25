@@ -21,11 +21,16 @@ import '../widget_util/calc_sized_box.dart';
 import 'list_item/like_size_text.dart';
 import 'list_item/user_image_description.dart';
 
-class GroupPostListWidget extends ConsumerWidget {
-  GroupPostListWidget({
+class GroupPostListWidget extends ConsumerStatefulWidget {
+  const GroupPostListWidget({
     Key? key,
   }) : super(key: key);
 
+  @override
+  _GroupPostListWidget createState() => _GroupPostListWidget();
+}
+
+class _GroupPostListWidget extends ConsumerState<GroupPostListWidget> {
   final Constants constants = getIt<Constants>();
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
   List<GetUserPostModel?>? followedUsersPostModel;
@@ -33,8 +38,13 @@ class GroupPostListWidget extends ConsumerWidget {
   final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    getMyProfileInfo(ref);
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => getMyProfileInfo(ref));
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
@@ -72,7 +82,7 @@ class GroupPostListWidget extends ConsumerWidget {
               children: [
                 showListImage(
                   context: context,
-                  model: model,
+                  photoName: model?.photoName ?? "",
                   name: model?.groupName,
                 ),
                 Padding(
@@ -105,22 +115,16 @@ class GroupPostListWidget extends ConsumerWidget {
     _userProfileModel = ref.watch(getProfileInfoProvider);
     followedUsersPostModel = ref.watch(getGroupPostsProvider);
     var model = await _profileViewModel.getMyProfileInfo();
+    _userProfileModel = model.data;
+    ref.read(getProfileInfoProvider.notifier).update(model.data);
 
-    if (model.data != null && _userProfileModel == null) {
-      _userProfileModel = model.data;
-      ref.read(getProfileInfoProvider.notifier).update(model.data);
-
-      observeGroupPost(ref);
-    } else if (_userProfileModel != null) {
-      observeGroupPost(ref);
-    }
+    observeGroupPost(ref);
   }
 
   void observeGroupPost(WidgetRef ref) async {
     var model = await _groupViewModel.getGroupPost(_userProfileModel!);
 
-    var getGroupPosts = ref.read(getGroupPostsProvider);
-    if (model.data != null && getGroupPosts == null) {
+    if (model.data != null) {
       ref.read(getGroupPostsProvider.notifier).update(model.data!);
     }
   }

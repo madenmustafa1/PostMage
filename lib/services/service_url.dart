@@ -13,7 +13,7 @@ class ServiceUrl {
   //static const String BASE_URL = "http://192.168.1.21:8080/";
   //For macos
   //adb reverse tcp:8080 tcp:8080
-  static const String BASE_URL = "http://0.0.0.0:8080/";
+  static const String BASE_URL = "http://192.168.1.15:8080/";
 
   //User Posts Route
   static const String USER_POSTS = "user-posts";
@@ -40,6 +40,7 @@ class ServiceUrl {
   static const String PROFILE = "profile";
   static const String MY_PROFILE = "/my-profile";
   static const String MY_FOLLOWER_DATA = "/follower-data";
+  static const String PROFILE_PHOTO = "/profile-photo";
 
   static const SUCCESS = 200;
 }

@@ -1,11 +1,12 @@
 import 'package:permission_handler/permission_handler.dart';
 
 class PermissionUtil {
-  void permissonCameraHandler() async {
-    await [
+  Future<Map<Permission, PermissionStatus>> permissonCameraHandler() async {
+    return await [
       Permission.camera,
       Permission.mediaLibrary,
     ].request();
+
     /*
     Map<Permission, PermissionStatus> statuses =
     var status = await Permission.camera.request();

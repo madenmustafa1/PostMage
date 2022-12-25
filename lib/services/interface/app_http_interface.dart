@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mdntls/model/profile/get_follower_data.dart';
 
 import '../../model/posts/update_post_model.dart';
@@ -32,6 +34,8 @@ abstract class AppHttpInterface {
   Future<DataLayer<UserProfileInfoModel?>> getMyProfileInfo();
 
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model);
+
+  Future<DataLayer<bool>> putMyProfilePhoto(File file);
 
   Future<DataLayer<GetFollowerDataModel?>> getFollowerData();
 

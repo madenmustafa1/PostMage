@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:mdntls/model/posts/update_post_model.dart';
 import '../../model/profile/get_follower_data.dart';
@@ -160,7 +162,32 @@ class AppHttpService implements AppHttpInterface {
 
   @override
   Future<DataLayer<bool>> putMyProfileInfo(UserProfileInfoModel model) async {
-    throw UnimplementedError();
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.PROFILE + ServiceUrl.MY_PROFILE,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: model,
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: response.data,
+      status: DataStatus.SUCCESS,
+    );
   }
 
   @override
@@ -539,6 +566,44 @@ class AppHttpService implements AppHttpInterface {
           statusCode: DataStatus.FAILED,
         ),
         status: DataStatus.FAILED,
+      );
+    }
+
+    return DataLayer(
+      data: true,
+      status: DataStatus.SUCCESS,
+    );
+  }
+
+  @override
+  Future<DataLayer<bool>> putMyProfilePhoto(File file) async {
+    FormData formData = FormData.fromMap({
+      "fileName": await MultipartFile.fromFile(
+        file.path,
+        filename: DateTime.now().millisecondsSinceEpoch.toString() + ".png",
+      ),
+    });
+
+    Response<dynamic> response = await dio.put(
+      ServiceUrl.BASE_URL + ServiceUrl.PROFILE + ServiceUrl.PROFILE_PHOTO,
+      options: Options(
+        headers: {
+          "authorization":
+              "Bearer " + AppUser.LOGIN_TOKEN_MODEL!.token.toString()
+        },
+        validateStatus: (status) => true,
+      ),
+      data: formData,
+    );
+
+    if (response.statusCode != ServiceUrl.SUCCESS) {
+      return DataLayer(
+        errorData: ErrorData(
+          reason: response.data.toString(),
+          statusCode: DataStatus.FAILED,
+        ),
+        status: DataStatus.FAILED,
+        data: false,
       );
     }
 

@@ -11,7 +11,7 @@ class BottombarMenu {
   static final List<Widget> widgetOptions = <Widget>[
     HomePage(),
     AllGroupsPostPage(),
-    ProfilePage()
+    const ProfilePage()
   ];
 
   final Constants _constants = getIt<Constants>();

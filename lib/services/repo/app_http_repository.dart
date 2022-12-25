@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mdntls/model/posts/update_post_model.dart';
 
 import '../../model/group/remove_user_group_model.dart';
@@ -112,4 +114,10 @@ class AppHttpRepository implements AppHttpInterface {
   Future<DataLayer<bool>> putUpdatePost(UpdatePostModel model) async {
     return await _appHttpService.putUpdatePost(model);
   }
+
+  @override
+  Future<DataLayer<bool>> putMyProfilePhoto(File file) async {
+    return await _appHttpService.putMyProfilePhoto(file);
+  }
+
 }
