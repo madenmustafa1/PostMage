@@ -59,11 +59,13 @@ class _AddUserPageState extends ConsumerState<AddUserPage> {
             child: Column(
               children: [
                 const CalcSizedBox(calc: 9),
+                /*
                 CustomIconRow(
                   title: constants.addUserPageSearchUserId,
                   icon: const Icon(Icons.edit, size: 30),
                   callback: () {},
                 ),
+                */
                 const CalcSizedBox(calc: 80),
                 CustomIconRow(
                   title: constants.addUserPageScanQR,

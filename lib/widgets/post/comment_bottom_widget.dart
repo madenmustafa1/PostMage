@@ -4,7 +4,6 @@ import '/util/date_util.dart';
 import '/model/posts/get_user_post_model.dart';
 import '/util/app_util.dart';
 import '/util/color_util.dart';
-import '../other/icons_util.dart';
 import '../text_and_button/simple_text.dart';
 
 class CommentBottomRowWidget extends StatelessWidget {
@@ -24,9 +23,10 @@ class CommentBottomRowWidget extends StatelessWidget {
         right: AppUtil.getWidth(context) / 20,
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          /*
           Row(
             children: [
               IconButton(
@@ -46,6 +46,7 @@ class CommentBottomRowWidget extends StatelessWidget {
               ),
             ],
           ),
+          */
           SimpleText(
             textColor: ColorUtil.BLACK,
             textIsNormal: true,

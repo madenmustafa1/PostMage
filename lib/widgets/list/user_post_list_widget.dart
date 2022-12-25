@@ -72,7 +72,7 @@ class UserPostListWidget extends ConsumerWidget {
               children: [
                 showListImage(
                   context: context,
-                  model: model,
+                  photoName: model?.photoName ?? "",
                 ),
                 Padding(
                   padding: const EdgeInsets.only(

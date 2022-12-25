@@ -55,6 +55,7 @@ class Constants {
   //Profile
   String TR_TUTORIAL_BUTTON = "Başla";
   String TUTORIAL_BG_IMAGE_URL = "assets/img/login_photo3.png";
+  String CHANGE_SUCCESS_PROFILE_PHOTO = "Profil fotoğrafı değiştirildi";
 
   //Add Post
   String addPostAppTitle = "Fotoğraf ekle";
@@ -65,7 +66,6 @@ class Constants {
   String commentsPageTitle = "Yorumlar";
   String addComment = "Yorum ekle";
 
-
   //Home Page
   String homePageTitle = "Ana sayfa";
   String secondText = "2";
@@ -75,7 +75,7 @@ class Constants {
 
   //Profile Page
   String profilePageTitle = "Profil";
-  String profilePosts = "Paylaşımlar";
+  String profilePosts = "Paylaşımlarım";
 
   //Group
   String makeGroupPageTitle = "Grup oluştur";
