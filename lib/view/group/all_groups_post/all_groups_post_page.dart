@@ -31,22 +31,3 @@ class AllGroupsPostPage extends StatelessWidget {
   }
 }
 
-/*
-   floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            heroTag: "tag-1",
-            onPressed: () => Navigator.pushNamed(context, CRouter.GROUP_LIST),
-            child: const Icon(Icons.groups),
-          ),
-          const CalcSizedBox(calc: 100),
-          FloatingActionButton(
-            heroTag: "tag-2",
-            onPressed: () => Navigator.pushNamed(context, CRouter.CREATE_GROUP),
-            child: const Icon(Icons.group_add),
-          ),
-        ],
-      ),
-   
-*/

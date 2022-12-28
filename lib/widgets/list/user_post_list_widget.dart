@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '/provider/profile/profile_page_provider.dart';
+import '../widget_util/show_toast.dart';
 import '/widgets/list/list_item/like_size_text.dart';
 import '/enum/list_type.dart';
 import '/model/posts/get_user_post_model.dart';
-import '/provider/home/home_page_provider.dart';
 import '/view/home/home_view_model.dart';
 import '/widgets/list/post_bottom_row.dart';
 import '/widgets/image/show_list_image.dart';
@@ -20,35 +19,56 @@ import '../widget_util/calc_sized_box.dart';
 import '/widgets/text_and_button/simple_text.dart';
 import 'list_item/user_image_description.dart';
 
-class UserPostListWidget extends ConsumerWidget {
+class UserPostListWidget extends ConsumerStatefulWidget {
   UserPostListWidget({
     Key? key,
     required this.listType,
   }) : super(key: key);
 
-  ListType listType;
-
-  final Constants constants = getIt<Constants>();
+  final ListType listType;
+  final Constants _constants = getIt<Constants>();
   final HomeViewModel _homeViewModel = getIt<HomeViewModel>();
-  List<GetUserPostModel?>? followedUsersPostModel;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    observeData(ref);
+  _UserPostListWidget createState() => _UserPostListWidget();
+}
+
+class _UserPostListWidget extends ConsumerState<UserPostListWidget> {
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         SizedBox(
           height: AppUtil.getHeight(context) / 1.27,
-          child: ListView.builder(
-            itemCount: followedUsersPostModel != null
-                ? followedUsersPostModel!.length
-                : 0,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, item) => listViewItem(
-              context,
-              item,
-              followedUsersPostModel![item],
-            ),
+          child: FutureBuilder(
+            future: _observeData(),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<GetUserPostModel?>?> snapshot,
+            ) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                default:
+                  if (snapshot.hasError) {
+                    ShowToast.errorToast(widget._constants.TR_GENERAL_ERROR);
+                    return Container();
+                  } else {
+                    return ListView.builder(
+                      itemCount:
+                          snapshot.data != null ? snapshot.data!.length : 0,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, item) => listViewItem(
+                        context,
+                        item,
+                        snapshot.data![item],
+                      ),
+                    );
+                  }
+              }
+            },
           ),
         ),
       ],
@@ -100,31 +120,7 @@ class UserPostListWidget extends ConsumerWidget {
     );
   }
 
-  void observeData(WidgetRef ref) async {
-    if (listType == ListType.HOME) {
-      observeDataFollowedUsers(ref);
-    } else {
-      observeMyPost(ref);
-    }
-  }
-
-  void observeDataFollowedUsers(WidgetRef ref) async {
-    followedUsersPostModel = ref.watch(getFollowedUsersPostsProvider);
-    var model = await _homeViewModel.getUsersPosts(listType: listType);
-
-    var usersPostsProvider = ref.read(getFollowedUsersPostsProvider);
-    if (model != null && usersPostsProvider == null) {
-      ref.read(getFollowedUsersPostsProvider.notifier).update(model);
-    }
-  }
-
-  void observeMyPost(WidgetRef ref) async {
-    followedUsersPostModel = ref.watch(getMyPostProvider);
-    var model = await _homeViewModel.getUsersPosts(listType: listType);
-
-    var usersPostsProvider = ref.read(getMyPostProvider);
-    if (model != null && usersPostsProvider == null) {
-      ref.read(getMyPostProvider.notifier).update(model);
-    }
+  Future<List<GetUserPostModel?>?> _observeData() async {
+    return await widget._homeViewModel.getUsersPosts(listType: widget.listType);
   }
 }

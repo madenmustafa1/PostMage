@@ -35,18 +35,8 @@ class PostViewModel {
     }
   }
 
-  Future<DataLayer<bool>> addComment({
-    required String postId,
-    required String comment,
-  }) async {
+  Future<DataLayer<bool>> updatePost({required UpdatePostModel model}) async {
     try {
-      UpdatePostModel model = UpdatePostModel(
-        objectId: postId,
-        commentModel: CommentModel(
-          comment: comment,
-          userId: AppUser.LOGIN_TOKEN_MODEL?.userId.toString(),
-        ),
-      );
       return _appHttpRepository.putUpdatePost(model);
     } catch (e) {
       return DataLayer(
@@ -55,5 +45,18 @@ class PostViewModel {
         statusCode: DataStatus.ERROR,
       ));
     }
+  }
+
+  Future<bool> userLikedThePost(GetUserPostModel? model) async {
+    if (model == null) return false;
+    if (model.likeUserId == null) return false;
+
+    for (var userId in model.likeUserId!) {
+      if (userId == AppUser.LOGIN_TOKEN_MODEL?.userId.toString()) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

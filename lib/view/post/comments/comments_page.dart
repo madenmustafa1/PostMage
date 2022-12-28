@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mdntls/util/app_util.dart';
+import '../../../model/posts/update_post_model.dart';
+import '../../../util/app_user.dart';
 import '/../../services/data_layer.dart';
 import '/../../widgets/post/comment_bottom_widget.dart';
 import '/../../widgets/widget_util/show_toast.dart';
@@ -145,10 +147,15 @@ class _CommentsPageState extends ConsumerState<CommentsPage> {
   }
 
   void addComment() async {
-    Future<DataLayer<bool>> response = widget._postViewModel.addComment(
-      postId: widget.objectId,
-      comment: commentController.text,
+    var model = UpdatePostModel(
+      objectId: widget.objectId,
+      commentModel: CommentModel(
+        comment: commentController.text,
+        userId: AppUser.LOGIN_TOKEN_MODEL?.userId.toString(),
+      ),
     );
+    Future<DataLayer<bool>> response =
+        widget._postViewModel.updatePost(model: model);
     commentController.text = "";
     FocusScope.of(context).requestFocus(FocusNode());
     var result = await response;
