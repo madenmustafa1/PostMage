@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../widget_util/show_toast.dart';
 import '/model/profile/group_profile_info.dart';
-import '/provider/profile/profile_page_provider.dart';
 import '/view/profile/profile_viewmodel.dart';
 import '/view/group/group_viewmodel.dart';
-import '/provider/group/get_group_post_provider.dart';
 import '/widgets/list/post_bottom_row.dart';
 import '/dependency_injection/setup.dart';
 import '/model/posts/get_user_post_model.dart';
@@ -31,17 +30,10 @@ class GroupPostListWidget extends ConsumerStatefulWidget {
 }
 
 class _GroupPostListWidget extends ConsumerState<GroupPostListWidget> {
-  final Constants constants = getIt<Constants>();
+  final Constants _constants = getIt<Constants>();
   final GroupViewModel _groupViewModel = getIt<GroupViewModel>();
   List<GetUserPostModel?>? followedUsersPostModel;
-  UserProfileInfoModel? _userProfileModel;
   final ProfileViewModel _profileViewModel = getIt<ProfileViewModel>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getMyProfileInfo(ref));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,16 +41,35 @@ class _GroupPostListWidget extends ConsumerState<GroupPostListWidget> {
       children: [
         SizedBox(
           height: AppUtil.getHeight(context) / 1.25,
-          child: ListView.builder(
-            itemCount: followedUsersPostModel != null
-                ? followedUsersPostModel!.length
-                : 0,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, item) => listViewItem(
-              context,
-              item,
-              followedUsersPostModel![item],
-            ),
+          child: FutureBuilder(
+            future: _observeGroupPost(),
+            builder: (
+              BuildContext context,
+              AsyncSnapshot<List<GetUserPostModel?>?> snapshot,
+            ) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                default:
+                  if (snapshot.hasError) {
+                    ShowToast.errorToast(_constants.TR_GENERAL_ERROR);
+                    return Container();
+                  } else {
+                    return ListView.builder(
+                      itemCount:
+                          snapshot.data != null ? snapshot.data!.length : 0,
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, item) => listViewItem(
+                        context,
+                        item,
+                        snapshot.data![item],
+                      ),
+                    );
+                  }
+              }
+            },
           ),
         ),
       ],
@@ -111,21 +122,15 @@ class _GroupPostListWidget extends ConsumerState<GroupPostListWidget> {
     );
   }
 
-  void getMyProfileInfo(WidgetRef ref) async {
-    _userProfileModel = ref.watch(getProfileInfoProvider);
-    followedUsersPostModel = ref.watch(getGroupPostsProvider);
-    var model = await _profileViewModel.getMyProfileInfo();
-    _userProfileModel = model.data;
-    ref.read(getProfileInfoProvider.notifier).update(model.data);
-
-    observeGroupPost(ref);
+  Future<List<GetUserPostModel?>?> _observeGroupPost() async {
+    var userProfileModel = await _getMyProfileInfo();
+    if (userProfileModel == null) return null;
+    var model = await _groupViewModel.getGroupPost(userProfileModel);
+    return model.data;
   }
 
-  void observeGroupPost(WidgetRef ref) async {
-    var model = await _groupViewModel.getGroupPost(_userProfileModel!);
-
-    if (model.data != null) {
-      ref.read(getGroupPostsProvider.notifier).update(model.data!);
-    }
+  Future<UserProfileInfoModel?> _getMyProfileInfo() async {
+    var model = await _profileViewModel.getMyProfileInfo();
+    return model.data;
   }
 }
